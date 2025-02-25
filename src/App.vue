@@ -15,6 +15,11 @@
     <h1>Dashboard des populations</h1>
     <PopChart :data="sampleData" />
   </div>
+
+  <div class="map-page">
+    <h1>Carte des cas COVID-19 par continent</h1>
+    <CovidMap />
+  </div>
 </template>
 
 <script>
@@ -29,6 +34,7 @@ export default {
 import BarChart from "./components/BarChart.vue";
 import DeathChart from "./components/DeathChart.vue";
 import PopChart from "./components/PopChart.vue";
+import CovidMap from './components/CovidMap.vue'
 
 const sampleData = [
   { country_region: "France", total_cases: 10, total_death : 2, population: 67 , active_case: 12},
