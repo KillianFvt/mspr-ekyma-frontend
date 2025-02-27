@@ -22,8 +22,8 @@
         
         const svg = d3.select(this.$refs.chart)
           .append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
+          .attr("width", width)
+          .attr("height", height + margin.bottom)
           .append("g")
           .attr("transform", `translate(${margin.left}, ${margin.top})`);
   

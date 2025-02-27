@@ -17,8 +17,8 @@ export default {
     drawChart() {
       const data = this.data;
       const total = d3.sum(data, (d) => d.total_cases);
-      const width = 400;
-      const height = 400;
+      const width = 500;
+      const height = 300;
       const radius = Math.min(width, height) / 2;
 
       const violetShades = [
@@ -32,7 +32,7 @@ export default {
       const svg = d3.select(this.$refs.chart)
         .append("svg")
         .attr("width", width)
-        .attr("height", height)
+        .attr("height", height + 50)
         .append("g")
         .attr("transform", `translate(${width / 2}, ${height / 2})`);
 

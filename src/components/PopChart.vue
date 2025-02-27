@@ -15,7 +15,7 @@
     },
     methods: {
       drawChart() {
-        const width = 500;
+        const width = 1000;
         const height = 300;
         const margin = { top: 20, right: 20, bottom: 60, left: 70 };
         
