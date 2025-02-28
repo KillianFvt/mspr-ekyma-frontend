@@ -6,7 +6,7 @@
       <div class="w-full flex flex-col md:flex-row gap-6">
         <div class="w-full md:w-1/2">
           <DashboardCard title="Dashboard des ventes">
-            <BarChart :data="sampleData" />
+            <PieChart :data="sampleData" />
           </DashboardCard>
         </div>
         <div class="w-full md:w-1/2">
@@ -33,7 +33,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import BarChart from "@/components/PieChart.vue";
+import PieChart from "@/components/PieChart.vue";
 import DeathChart from "@/components/DeathChart.vue";
 import PopChart from "@/components/PopChart.vue";
 import DashboardCard from "@/components/DashboardCard.vue";
