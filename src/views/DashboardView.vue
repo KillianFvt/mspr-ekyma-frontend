@@ -6,7 +6,7 @@
       <div class="w-full flex flex-col md:flex-row gap-6">
         <div class="w-full md:w-1/2">
           <DashboardCard title="Dashboard des ventes">
-            <PieChart :data="sampleData" />
+            <PieChart :data="pieChartData" />
           </DashboardCard>
         </div>
         <div class="w-full md:w-1/2">
