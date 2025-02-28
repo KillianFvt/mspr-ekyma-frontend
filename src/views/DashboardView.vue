@@ -24,7 +24,7 @@
 
       <div class="map-page">
         <h1>Carte des cas COVID-19 par continent</h1>
-        <CovidMap />
+        <!-- <CovidMap /> -->
       </div>
 
     </div>
@@ -32,11 +32,31 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue';
 import BarChart from "@/components/BarChart.vue";
 import DeathChart from "@/components/DeathChart.vue";
 import PopChart from "@/components/PopChart.vue";
 import DashboardCard from "@/components/DashboardCard.vue";
-import CovidMap from '@/components/CovidMap.vue'
+// import CovidMap from '@/components/CovidMap.vue'
+
+const pieChartData = ref([]);
+
+onMounted(async () => {
+  try {
+    const response = await fetch("http://127.0.0.1:8000/api/covid-data/top-countries/?top=24");
+    console.log(response.url);
+    
+    if (!response.ok) {
+      throw new Error('Erreur fetch');
+    }
+
+    const data = await response.json();
+    console.log(data);
+    pieChartData.value = data;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des données:', error);
+  }
+});
 
 const sampleData = [
   { country_region: "France", total_cases: 10, total_death: 2, population: 67, active_case: 12 },

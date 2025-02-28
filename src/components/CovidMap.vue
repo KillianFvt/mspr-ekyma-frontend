@@ -54,7 +54,7 @@ export default {
       })
     },
     async drawMap() {
-      const response = await fetch('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson')
+      const response = await fetch(' ')
       const geoData = await response.json()
 
       const svg = d3.select("#worldMap svg")
