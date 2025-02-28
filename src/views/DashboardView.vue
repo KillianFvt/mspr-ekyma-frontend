@@ -3,6 +3,25 @@
     <div class="max-w-6xl mx-auto">
       <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center">📊 MSPR 6.1 Dashboard</h1>
       
+      <div class="w-full mt-6">
+        <DashboardCard title="Ratios COVID-19">
+          <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white p-4 rounded shadow">
+              <p class="text-lg font-semibold">Ratio des cas</p>
+              <p class="text-2xl">{{ squareData.ratio_cases }}</p>
+            </div>
+            <div class="bg-white p-4 rounded shadow">
+              <p class="text-lg font-semibold">Ratio des décès</p>
+              <p class="text-2xl">{{ squareData.ratio_deaths }}</p>
+            </div>
+            <div class="bg-white p-4 rounded shadow">
+              <p class="text-lg font-semibold">Ratio des récupérations</p>
+              <p class="text-2xl">{{ squareData.ratio_recovered }}</p>
+            </div>
+          </div>
+        </DashboardCard>
+      </div>
+
       <div class="w-full flex flex-col md:flex-row gap-6">
         <div class="w-full md:w-1/2">
           <DashboardCard title="Dashboard des ventes">
@@ -40,6 +59,7 @@ import DashboardCard from "@/components/DashboardCard.vue";
 // import CovidMap from '@/components/CovidMap.vue'
 
 const pieChartData = ref([]);
+const squareData = ref({});
 
 onMounted(async () => {
   try {
@@ -53,6 +73,21 @@ onMounted(async () => {
     const data = await response.json();
     console.log(data);
     pieChartData.value = data;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des données:', error);
+  }
+
+  try {
+    const response = await fetch("http://127.0.0.1:8000/api/covid-data/world-ratios");
+    console.log(response.url);
+    
+    if (!response.ok) {
+      throw new Error('Erreur fetch');
+    }
+
+    const data = await response.json();
+    console.log(data);
+    squareData.value = data;
   } catch (error) {
     console.error('Erreur lors de la récupération des données:', error);
   }
