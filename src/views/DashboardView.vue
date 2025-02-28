@@ -33,7 +33,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import BarChart from "@/components/BarChart.vue";
+import BarChart from "@/components/PieChart.vue";
 import DeathChart from "@/components/DeathChart.vue";
 import PopChart from "@/components/PopChart.vue";
 import DashboardCard from "@/components/DashboardCard.vue";
