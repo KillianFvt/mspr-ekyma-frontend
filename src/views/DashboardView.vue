@@ -4,13 +4,13 @@
       <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center">📊 MSPR 6.1 Dashboard</h1>
       
       <div class="w-full flex flex-col md:flex-row gap-6">
-        <div class="w-full md:w-1/2">
-          <DashboardCard title="Dashboard des ventes">
+        <div class="w-full">
+          <DashboardCard title="Nombre de cas par pays">
             <PieChart :data="pieChartData" />
           </DashboardCard>
         </div>
-        <div class="w-full md:w-1/2">
-          <DashboardCard title="Dashboard des morts">
+        <div class="w-full">
+          <DashboardCard title="Nombre de morts par pays">
             <DeathChart :data="pieChartData" />
           </DashboardCard>
         </div>
