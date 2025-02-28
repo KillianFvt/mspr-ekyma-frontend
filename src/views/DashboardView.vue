@@ -11,7 +11,7 @@
         </div>
         <div class="w-full md:w-1/2">
           <DashboardCard title="Dashboard des morts">
-            <DeathChart :data="sampleData" />
+            <DeathChart :data="pieChartData" />
           </DashboardCard>
         </div>
       </div>
