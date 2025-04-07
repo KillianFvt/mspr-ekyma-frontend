@@ -66,6 +66,28 @@
         </div>
       </div>
 
+      <!-- Nouveau graphique - Données par continent -->
+      <div class="bg-slate-800 rounded-xl p-6 shadow-lg mb-8">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-semibold text-white flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Répartition par continent
+          </h2>
+          <div class="flex items-center space-x-2">
+            <select v-model="selectedMetricContinent" class="bg-slate-700 text-white rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <option value="total_cases">Cas totaux</option>
+              <option value="total_deaths">Décès</option>
+              <option value="population">Population</option>
+            </select>
+          </div>
+        </div>
+        <div class="chart-container h-80">
+          <ContinentChart :data="continentData" :metricKey="selectedMetricContinent" />
+        </div>
+      </div>
+
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <div class="bg-slate-800 rounded-xl p-5 shadow-lg h-full col-span-1">
           <div class="flex items-center justify-between mb-6">
@@ -125,6 +147,28 @@
         </div>
       </div>
 
+      <!-- Nouveau graphique - Relation Population vs Cas -->
+      <div class="bg-slate-800 rounded-xl p-6 shadow-lg mb-8">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-semibold text-white flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            Relation Population vs Cas COVID
+          </h2>
+          <div class="flex items-center space-x-2">
+            <select v-model="selectedTopCount" class="bg-slate-700 text-white rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
+              <option value="10">Top 10</option>
+              <option value="20">Top 20</option>
+              <option value="30">Top 30</option>
+            </select>
+          </div>
+        </div>
+        <div class="chart-container h-80">
+          <ScatterChart :data="fullCovidData" :topCount="selectedTopCount" />
+        </div>
+      </div>
+
       <div class="bg-slate-800 rounded-xl p-6 shadow-lg mb-8">
         <div class="flex items-center justify-between mb-6">
           <h2 class="text-xl font-semibold text-white flex items-center">
@@ -174,7 +218,10 @@ import { ref, onMounted } from 'vue';
 import PieChart from "@/components/PieChart.vue";
 import DeathChart from "@/components/DeathChart.vue";
 import PopChart from "@/components/PopChart.vue";
-import DashboardCard from "@/components/DashboardCard.vue";
+// Nous n'utilisons plus DashboardCard dans ce design
+// import DashboardCard from "@/components/DashboardCard.vue";
+import ContinentChart from "@/components/ContinentChart.vue";
+import ScatterChart from "@/components/ScatterChart.vue";
 // import CovidMap from '@/components/CovidMap.vue'
 
 const pieChartData = ref([]);
@@ -183,6 +230,12 @@ const squareData = ref({
   ratio_deaths: '0.00%',
   ratio_recovered: '0.00%'
 });
+const fullCovidData = ref([]);
+const continentData = ref([]);
+
+// Variables de contrôle pour les graphiques
+const selectedMetricContinent = ref('total_cases');
+const selectedTopCount = ref('20');
 
 onMounted(async () => {
   try {
@@ -213,6 +266,44 @@ onMounted(async () => {
     squareData.value = data;
   } catch (error) {
     console.error('Erreur lors de la récupération des données:', error);
+  }
+
+  // Récupération de toutes les données COVID pour les nouveaux graphiques
+  try {
+    const response = await fetch("http://127.0.0.1:8000/api/covid-data/");
+    
+    if (!response.ok) {
+      throw new Error('Erreur fetch');
+    }
+
+    const data = await response.json();
+    fullCovidData.value = data;
+    
+    // Traitement des données par continent
+    const continents = {};
+    data.forEach(item => {
+      if (!item.continent) return;
+      
+      if (!continents[item.continent]) {
+        continents[item.continent] = {
+          name: item.continent,
+          total_cases: 0,
+          total_deaths: 0,
+          population: 0,
+          country_count: 0
+        };
+      }
+      
+      if (item.total_cases) continents[item.continent].total_cases += item.total_cases;
+      if (item.total_deaths) continents[item.continent].total_deaths += item.total_deaths;
+      if (item.population) continents[item.continent].population += item.population;
+      continents[item.continent].country_count++;
+    });
+    
+    continentData.value = Object.values(continents);
+    
+  } catch (error) {
+    console.error('Erreur lors de la récupération des données complètes:', error);
   }
 });
 
