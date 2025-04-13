@@ -152,7 +152,7 @@
             </div>
           </div>
           <div class="chart-container">
-            <ActiveCasesChart :data="sampleData" :limit="Number(activeCasesChartLimit)" :displayMode="activeCasesDisplayMode" />
+            <ActiveCasesChart :data="fullCovidData" :limit="Number(activeCasesChartLimit)" :displayMode="activeCasesDisplayMode" />
           </div>
         </div>
       </div>
@@ -361,15 +361,6 @@ onMounted(async () => {
     console.error('Erreur lors de la récupération des données complètes:', error);
   }
 });
-
-const sampleData = [
-  { country_region: "France", total_cases: 10, total_death: 2, population: 67, active_case: 12 },
-  { country_region: "USA", total_cases: 15, total_death: 4, population: 33, active_case: 5 },
-  { country_region: "Spain", total_cases: 8, total_death: 10, population: 59, active_case: 43 },
-  { country_region: "Italy", total_cases: 20, total_death: 6, population: 78, active_case: 23 },
-  { country_region: "Iraq", total_cases: 18, total_death: 7, population: 12, active_case: 3 },
-  { country_region: "Wales", total_cases: 25, total_death: 29, population: 76, active_case: 100 }
-];
 
 // Fonction utilitaire pour traiter les valeurs de ratio
 function processRatioValue(value) {

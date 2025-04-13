@@ -136,6 +136,7 @@ const createChart = () => {
 };
 
 watch(() => props.data, createChart, { deep: true });
+watch(() => props.limit, createChart);
 
 onMounted(() => {
   if (hasData.value) {
