@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, defineProps, onBeforeUnmount } from 'vue';
+import { ref, onMounted, watch, defineProps, onBeforeUnmount, computed } from 'vue';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import worldGeoJSON from '@/assets/world.geo.json';
@@ -55,7 +55,36 @@ const props = defineProps({
 
 let map = null;
 let geojsonLayer = null;
+let continentLayers = {}; // Pour stocker les couches par continent
 const isLoading = ref(true);
+
+// Données agrégées par continent
+const continentData = computed(() => {
+  const continents = {};
+  
+  props.data.forEach(item => {
+    if (!item.continent) return;
+    
+    if (!continents[item.continent]) {
+      continents[item.continent] = {
+        name: item.continent,
+        total_cases: 0,
+        total_deaths: 0,
+        population: 0,
+        country_count: 0,
+        countries: []
+      };
+    }
+    
+    if (item.total_cases) continents[item.continent].total_cases += item.total_cases;
+    if (item.total_deaths) continents[item.continent].total_deaths += item.total_deaths;
+    if (item.population) continents[item.continent].population += item.population;
+    continents[item.continent].country_count++;
+    continents[item.continent].countries.push(item.country_region);
+  });
+  
+  return continents;
+});
 
 const getColor = (cases) => {
   if (!cases) return '#6B7280';
@@ -98,43 +127,108 @@ const onEachFeature = (feature, layer) => {
   );
   
   if (countryData) {
-    layer.bindPopup(`
-      <div class="map-popup">
-        <h3>${countryData.country_region}</h3>
-        <table>
-          <tr>
-            <td>Cas:</td>
-            <td><strong>${formatNumber(countryData.total_cases)}</strong></td>
-          </tr>
-          <tr>
-            <td>Décès:</td>
-            <td><strong>${formatNumber(countryData.total_deaths)}</strong></td>
-          </tr>
-          <tr>
-            <td>Population:</td>
-            <td><strong>${formatNumber(countryData.population)}</strong></td>
-          </tr>
-        </table>
-      </div>
-    `);
+    const continent = countryData.continent;
     
-    layer.on({
-      mouseover: function(e) {
-        const layer = e.target;
-        layer.setStyle({
-          weight: 2,
-          color: '#ffffff',
-          dashArray: '',
-          fillOpacity: 0.9
-        });
-        layer.bringToFront();
-      },
-      mouseout: function(e) {
-        geojsonLayer.resetStyle(e.target);
+    if (continent && props.view === 'continent') {
+      if (!continentLayers[continent]) {
+        continentLayers[continent] = [];
       }
-    });
+      continentLayers[continent].push(layer);
+      
+      const continentInfo = continentData.value[continent];
+      if (continentInfo) {
+        layer.bindPopup(`
+          <div class="map-popup">
+            <h3>${continentInfo.name}</h3>
+            <table>
+              <tr>
+                <td>Cas:</td>
+                <td><strong>${formatNumber(continentInfo.total_cases)}</strong></td>
+              </tr>
+              <tr>
+                <td>Décès:</td>
+                <td><strong>${formatNumber(continentInfo.total_deaths)}</strong></td>
+              </tr>
+              <tr>
+                <td>Population:</td>
+                <td><strong>${formatNumber(continentInfo.population)}</strong></td>
+              </tr>
+              <tr>
+                <td>Pays:</td>
+                <td><strong>${formatNumber(continentInfo.country_count)}</strong></td>
+              </tr>
+            </table>
+          </div>
+        `);
+      }
+      
+      layer.on({
+        mouseover: function() {
+          if (props.view === 'continent' && continentLayers[continent]) {
+            continentLayers[continent].forEach(countryLayer => {
+              countryLayer.setStyle({
+                weight: 2,
+                color: '#ffffff',
+                dashArray: '',
+                fillOpacity: 0.9
+              });
+              if (countryLayer.bringToFront) {
+                countryLayer.bringToFront();
+              }
+            });
+          }
+        },
+        mouseout: function() {
+          if (props.view === 'continent' && geojsonLayer) {
+            geojsonLayer.resetStyle(layer);
+            if (continentLayers[continent]) {
+              continentLayers[continent].forEach(countryLayer => {
+                geojsonLayer.resetStyle(countryLayer);
+              });
+            }
+          }
+        }
+      });
+    } else {
+      layer.bindPopup(`
+        <div class="map-popup">
+          <h3>${countryData.country_region}</h3>
+          <table>
+            <tr>
+              <td>Cas:</td>
+              <td><strong>${formatNumber(countryData.total_cases)}</strong></td>
+            </tr>
+            <tr>
+              <td>Décès:</td>
+              <td><strong>${formatNumber(countryData.total_deaths)}</strong></td>
+            </tr>
+            <tr>
+              <td>Population:</td>
+              <td><strong>${formatNumber(countryData.population)}</strong></td>
+            </tr>
+          </table>
+        </div>
+      `);
+      
+      layer.on({
+        mouseover: function(e) {
+          const layer = e.target;
+          layer.setStyle({
+            weight: 2,
+            color: '#ffffff',
+            dashArray: '',
+            fillOpacity: 0.9
+          });
+          layer.bringToFront();
+        },
+        mouseout: function(e) {
+          geojsonLayer.resetStyle(e.target);
+        }
+      });
+    }
   }
 };
+
 const initMap = () => {
   isLoading.value = true;
   
@@ -161,6 +255,8 @@ const initMap = () => {
     }).addTo(map);
     
     if (props.data && props.data.length > 0) {
+      continentLayers = {};
+      
       geojsonLayer = L.geoJSON(worldGeoJSON, {
         style: styleFunction,
         onEachFeature: onEachFeature
@@ -188,6 +284,8 @@ watch(() => props.data, () => {
         map.removeLayer(geojsonLayer);
       }
       
+      continentLayers = {};
+      
       geojsonLayer = L.geoJSON(worldGeoJSON, {
         style: styleFunction,
         onEachFeature: onEachFeature
@@ -203,6 +301,17 @@ watch(() => props.data, () => {
 watch(() => props.view, () => {
   if (map) {
     try {
+      if (geojsonLayer) {
+        map.removeLayer(geojsonLayer);
+      }
+      
+      continentLayers = {};
+      
+      geojsonLayer = L.geoJSON(worldGeoJSON, {
+        style: styleFunction,
+        onEachFeature: onEachFeature
+      }).addTo(map);
+      
       if (props.view === 'continent') {
         map.setZoom(1);
       } else {
