@@ -29,7 +29,7 @@
           <div class="flex flex-col justify-between h-full">
             <p class="text-blue-200 font-medium mb-1">Cas Confirmés</p>
             <div>
-              <p class="text-4xl font-bold text-white mb-1">{{ squareData.ratio_cases || '0.00%' }}</p>
+              <p class="text-4xl font-bold text-white mb-1">{{ formattedRatioCases }}</p>
               <p class="text-blue-200 text-sm">de la population mondiale</p>
             </div>
           </div>
@@ -44,7 +44,7 @@
           <div class="flex flex-col justify-between h-full">
             <p class="text-rose-200 font-medium mb-1">Décès</p>
             <div>
-              <p class="text-4xl font-bold text-white mb-1">{{ squareData.ratio_deaths || '0.00%' }}</p>
+              <p class="text-4xl font-bold text-white mb-1">{{ formattedRatioDeaths }}</p>
               <p class="text-rose-200 text-sm">des cas confirmés</p>
             </div>
           </div>
@@ -59,7 +59,7 @@
           <div class="flex flex-col justify-between h-full">
             <p class="text-emerald-200 font-medium mb-1">Guérisons</p>
             <div>
-              <p class="text-4xl font-bold text-white mb-1">{{ squareData.ratio_recovered || '0.00%' }}</p>
+              <p class="text-4xl font-bold text-white mb-1">{{ formattedRatioRecovered }}</p>
               <p class="text-emerald-200 text-sm">des cas confirmés</p>
             </div>
           </div>
@@ -224,7 +224,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import CountryPieChart from "@/components/CountryPieChart.vue";
 import CountryDeathChart from "@/components/CountryDeathChart.vue";
 import ActiveCasesChart from "@/components/ActiveCasesChart.vue";
@@ -239,6 +239,42 @@ const squareData = ref({
 });
 const fullCovidData = ref([]);
 const continentData = ref([]);
+
+const formattedRatioCases = computed(() => {
+  if (!squareData.value || !squareData.value.ratio_cases) return '0.00%';
+  
+  try {
+    const valueStr = squareData.value.ratio_cases.toString().replace('%', '').trim();
+    const value = parseFloat(valueStr);
+    return value.toFixed(2) + '%';
+  } catch (e) {
+    return squareData.value.ratio_cases;
+  }
+});
+
+const formattedRatioDeaths = computed(() => {
+  if (!squareData.value || !squareData.value.ratio_deaths) return '0.00%';
+  
+  try {
+    const valueStr = squareData.value.ratio_deaths.toString().replace('%', '').trim();
+    const value = parseFloat(valueStr);
+    return value.toFixed(2) + '%';
+  } catch (e) {
+    return squareData.value.ratio_deaths;
+  }
+});
+
+const formattedRatioRecovered = computed(() => {
+  if (!squareData.value || !squareData.value.ratio_recovered) return '0.00%';
+  
+  try {
+    const valueStr = squareData.value.ratio_recovered.toString().replace('%', '').trim();
+    const value = parseFloat(valueStr);
+    return value.toFixed(2) + '%';
+  } catch (e) {
+    return squareData.value.ratio_recovered;
+  }
+});
 
 // Variables de contrôle pour les graphiques
 const selectedMetricContinent = ref('total_cases');
@@ -274,7 +310,15 @@ onMounted(async () => {
 
     const data = await response.json();
     console.log(data);
-    squareData.value = data;
+    
+    const processedData = {
+      ratio_cases: processRatioValue(data.ratio_cases),
+      ratio_deaths: processRatioValue(data.ratio_deaths),
+      ratio_recovered: processRatioValue(data.ratio_recovered)
+    };
+    
+    squareData.value = processedData;
+    console.log(squareData.value);
   } catch (error) {
     console.error('Erreur lors de la récupération des données:', error);
   }
@@ -326,6 +370,29 @@ const sampleData = [
   { country_region: "Iraq", total_cases: 18, total_death: 7, population: 12, active_case: 3 },
   { country_region: "Wales", total_cases: 25, total_death: 29, population: 76, active_case: 100 }
 ];
+
+// Fonction utilitaire pour traiter les valeurs de ratio
+function processRatioValue(value) {
+  if (value === undefined || value === null) return '0.00%';
+
+  if (typeof value === 'string' && value.includes('%')) {
+    return value;
+  }
+  
+  // au cas où
+  const numValue = typeof value === 'string' ? parseFloat(value) : value;
+
+  // bail uniquement pour les cas confirmés car bizarre un peu la data là
+  if (!isNaN(numValue) && numValue >= 0 && numValue <= 1) {
+    return (numValue * 100).toFixed(2) + '%';
+  }
+  
+  if (!isNaN(numValue)) {
+    return numValue.toFixed(2) + '%';
+  }
+  
+  return '0.00%';
+}
 </script>
 
 <style scoped>
