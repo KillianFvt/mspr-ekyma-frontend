@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed } from 'vue';
+import { ref, onMounted, watch, computed, defineProps } from 'vue';
 import Chart from 'chart.js/auto';
 
 const props = defineProps({

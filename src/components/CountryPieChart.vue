@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed } from 'vue';
+import { ref, onMounted, watch, computed, defineProps } from 'vue';
 import Chart from 'chart.js/auto';
 
 const props = defineProps({
@@ -34,14 +34,17 @@ const createChart = () => {
   
   const ctx = countryPieChart.value.getContext('2d');
   
+  // pour éviter un bail de mutation (?)
+  const dataArray = [...props.data];
+  
   // Limiter le nombre de pays à afficher pour éviter la surcharge visuelle
   // et regrouper les pays restants dans "Autres"
-  const topCountries = [...props.data]
+  const topCountries = [...dataArray]
     .sort((a, b) => b.total_cases - a.total_cases)
     .slice(0, props.limit);
   
   // Calculer le total des cas pour les pays non affichés
-  const othersTotal = props.data
+  const othersTotal = [...dataArray]
     .sort((a, b) => b.total_cases - a.total_cases)
     .slice(props.limit)
     .reduce((sum, country) => sum + (country.total_cases || 0), 0);

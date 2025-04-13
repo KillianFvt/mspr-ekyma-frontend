@@ -139,14 +139,20 @@
               </svg>
               Population et cas actifs
             </h2>
-            <button class="text-slate-400 hover:text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-              </svg>
-            </button>
+            <div class="flex items-center">
+              <select v-model="activeCasesChartLimit" class="bg-slate-700 text-white rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 mr-2">
+                <option value="5">Top 5</option>
+                <option value="8">Top 8</option>
+                <option value="10">Top 10</option>
+              </select>
+              <select v-model="activeCasesDisplayMode" class="bg-slate-700 text-white rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+                <option value="bar">Barres horizontales</option>
+                <option value="column">Barres verticales</option>
+              </select>
+            </div>
           </div>
           <div class="chart-container">
-            <PopChart :data="sampleData" />
+            <ActiveCasesChart :data="sampleData" :limit="Number(activeCasesChartLimit)" :displayMode="activeCasesDisplayMode" />
           </div>
         </div>
       </div>
@@ -219,17 +225,11 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-// Remplacer les anciens composants par les nouveaux
-// import PieChart from "@/components/PieChart.vue";
-// import DeathChart from "@/components/DeathChart.vue";
 import CountryPieChart from "@/components/CountryPieChart.vue";
 import CountryDeathChart from "@/components/CountryDeathChart.vue";
-import PopChart from "@/components/PopChart.vue";
-// Nous n'utilisons plus DashboardCard dans ce design
-// import DashboardCard from "@/components/DashboardCard.vue";
+import ActiveCasesChart from "@/components/ActiveCasesChart.vue";
 import ContinentChart from "@/components/ContinentChart.vue";
 import ScatterChart from "@/components/ScatterChart.vue";
-// import CovidMap from '@/components/CovidMap.vue'
 
 const pieChartData = ref([]);
 const squareData = ref({
@@ -245,6 +245,8 @@ const selectedMetricContinent = ref('total_cases');
 const selectedTopCount = ref('20');
 const casesChartLimit = ref('10');
 const deathChartLimit = ref('10');
+const activeCasesChartLimit = ref('8');
+const activeCasesDisplayMode = ref('bar');
 
 onMounted(async () => {
   try {
