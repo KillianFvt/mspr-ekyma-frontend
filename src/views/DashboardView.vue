@@ -188,25 +188,44 @@
             Carte mondiale des cas COVID-19
           </h2>
           <div class="flex items-center space-x-2">
-            <button class="bg-slate-700 hover:bg-slate-600 text-white py-1 px-3 rounded-md text-sm transition-colors">
+            <button 
+              @click="mapView = 'continent'" 
+              :class="[
+                'text-sm py-1 px-3 rounded-md transition-colors', 
+                mapView === 'continent' 
+                  ? 'bg-amber-600 text-white' 
+                  : 'bg-slate-700 hover:bg-slate-600 text-white'
+              ]"
+            >
               Par continent
             </button>
-            <button class="bg-slate-900 hover:bg-slate-600 text-slate-300 py-1 px-3 rounded-md text-sm transition-colors">
+            <button 
+              @click="mapView = 'country'" 
+              :class="[
+                'text-sm py-1 px-3 rounded-md transition-colors', 
+                mapView === 'country' 
+                  ? 'bg-amber-600 text-white' 
+                  : 'bg-slate-700 hover:bg-slate-600 text-white'
+              ]"
+            >
               Par pays
             </button>
           </div>
         </div>
-        <div class="map-container h-80 bg-slate-900 rounded-lg flex items-center justify-center">
-          <div class="text-center">
-            <div class="relative w-16 h-16 mx-auto mb-3">
-              <svg class="animate-ping absolute h-full w-full text-amber-600 opacity-30" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-              </svg>
-              <svg class="relative h-full w-full text-amber-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-              </svg>
+        <div class="map-container h-96 bg-slate-900 rounded-lg overflow-hidden relative">
+          <CovidMap :data="fullCovidData" :view="mapView" v-if="fullCovidData.length > 0" />
+          <div v-else class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center">
+              <div class="relative w-16 h-16 mx-auto mb-3">
+                <svg class="animate-ping absolute h-full w-full text-amber-600 opacity-30" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                </svg>
+                <svg class="relative h-full w-full text-amber-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                </svg>
+              </div>
+              <p class="text-slate-400 text-sm">Chargement de la carte...</p>
             </div>
-            <p class="text-slate-400 text-sm">Carte interactive en cours de développement</p>
           </div>
         </div>
       </div>
@@ -230,6 +249,7 @@ import CountryDeathChart from "@/components/CountryDeathChart.vue";
 import ActiveCasesChart from "@/components/ActiveCasesChart.vue";
 import ContinentChart from "@/components/ContinentChart.vue";
 import ScatterChart from "@/components/ScatterChart.vue";
+import CovidMap from "@/components/CovidMap.vue";
 
 const pieChartData = ref([]);
 const squareData = ref({
@@ -283,6 +303,7 @@ const casesChartLimit = ref('10');
 const deathChartLimit = ref('10');
 const activeCasesChartLimit = ref('8');
 const activeCasesDisplayMode = ref('bar');
+const mapView = ref('country');
 
 onMounted(async () => {
   try {
@@ -399,5 +420,14 @@ function processRatioValue(value) {
 
 .map-container {
   animation: fadeIn 1s ease-in-out forwards;
+  position: relative;
+}
+
+:deep(.leaflet-popup) {
+  z-index: 1000;
+}
+
+:deep(.leaflet-control-zoom) {
+  z-index: 1000;
 }
 </style>
