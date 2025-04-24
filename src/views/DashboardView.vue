@@ -243,7 +243,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import CountryPieChart from "../components/CountryPieChart.vue";
 import CountryDeathChart from "../components/CountryDeathChart.vue";
 import ActiveCasesChart from "../components/ActiveCasesChart.vue";
@@ -332,14 +332,12 @@ onMounted(async () => {
 
     const data = await response.json();
     console.log(data);
-    
-    const processedData = {
+
+    squareData.value = {
       ratio_cases: processRatioValue(data.ratio_cases),
       ratio_deaths: processRatioValue(data.ratio_deaths),
       ratio_recovered: processRatioValue(data.ratio_recovered)
     };
-    
-    squareData.value = processedData;
     console.log(squareData.value);
   } catch (error) {
     console.error('Erreur lors de la récupération des données:', error);
