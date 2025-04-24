@@ -352,7 +352,8 @@ onMounted(async () => {
       throw new Error('Erreur fetch');
     }
 
-    const data = await response.json();
+    const responseData = await response.json();
+    const data = responseData.results;
     fullCovidData.value = data;
     
     // Traitement des données par continent
