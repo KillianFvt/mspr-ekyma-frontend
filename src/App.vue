@@ -11,7 +11,7 @@ export default {
 </script>
 
 <script setup>
-import DashboardView from "@/views/DashboardView.vue";
+import DashboardView from "./views/DashboardView.vue";
 </script>
 
 
