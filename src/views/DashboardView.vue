@@ -243,13 +243,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-import CountryPieChart from "@/components/CountryPieChart.vue";
-import CountryDeathChart from "@/components/CountryDeathChart.vue";
-import ActiveCasesChart from "@/components/ActiveCasesChart.vue";
-import ContinentChart from "@/components/ContinentChart.vue";
-import ScatterChart from "@/components/ScatterChart.vue";
-import CovidMap from "@/components/CovidMap.vue";
+import {computed, onMounted, ref} from 'vue';
+import CountryPieChart from "../components/CountryPieChart.vue";
+import CountryDeathChart from "../components/CountryDeathChart.vue";
+import ActiveCasesChart from "../components/ActiveCasesChart.vue";
+import ContinentChart from "../components/ContinentChart.vue";
+import ScatterChart from "../components/ScatterChart.vue";
+import CovidMap from "../components/CovidMap.vue";
+import {API_URL} from "../constants.js";
 
 const pieChartData = ref([]);
 const squareData = ref({
@@ -307,7 +308,7 @@ const mapView = ref('country');
 
 onMounted(async () => {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/covid-data/top-countries/?top=24");
+    const response = await fetch(`${API_URL}/api/covid-data/top-countries/?top=24`);
     console.log(response.url);
     
     if (!response.ok) {
@@ -322,7 +323,7 @@ onMounted(async () => {
   }
 
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/covid-data/world-ratios");
+    const response = await fetch(`${API_URL}/api/covid-data/world-ratios`);
     console.log(response.url);
     
     if (!response.ok) {
@@ -331,14 +332,12 @@ onMounted(async () => {
 
     const data = await response.json();
     console.log(data);
-    
-    const processedData = {
+
+    squareData.value = {
       ratio_cases: processRatioValue(data.ratio_cases),
       ratio_deaths: processRatioValue(data.ratio_deaths),
       ratio_recovered: processRatioValue(data.ratio_recovered)
     };
-    
-    squareData.value = processedData;
     console.log(squareData.value);
   } catch (error) {
     console.error('Erreur lors de la récupération des données:', error);
@@ -346,7 +345,7 @@ onMounted(async () => {
 
   // Récupération de toutes les données COVID pour les nouveaux graphiques
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/covid-data/");
+    const response = await fetch(`${API_URL}/api/covid-data/`);
     
     if (!response.ok) {
       throw new Error('Erreur fetch');

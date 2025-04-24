@@ -40,7 +40,7 @@
 import { ref, onMounted, watch, defineProps, onBeforeUnmount, computed } from 'vue';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import worldGeoJSON from '@/assets/world.geo.json';
+import worldGeoJSON from '../assets/world.geo.json';
 
 const props = defineProps({
   data: {
