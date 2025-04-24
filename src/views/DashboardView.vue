@@ -231,7 +231,7 @@
       </div>
 
       <footer class="text-center text-slate-500 text-sm py-6 border-t border-slate-800">
-        <p>© 2023 MSPR 6.1 - Données actualisées automatiquement toutes les heures</p>
+        <p>© 2025 MSPR 6.1 - Données actualisées automatiquement toutes les heures</p>
         <div class="flex justify-center mt-3 space-x-4">
           <a href="#" class="text-slate-400 hover:text-white transition-colors">À propos</a>
           <a href="#" class="text-slate-400 hover:text-white transition-colors">API</a>
