@@ -53,11 +53,6 @@ const createChart = () => {
   const labels = topCountries.map(item => item.country_region);
   const dataValues = topCountries.map(item => item.total_deaths || 0);
   
-  // Ajouter la catégorie "Autres" si nécessaire
-  if (othersTotal > 0 && countriesWithDeaths.length > props.limit) {
-    labels.push('Autres');
-    dataValues.push(othersTotal);
-  }
   
   // Générer des couleurs distinctes
   const backgroundColors = [
