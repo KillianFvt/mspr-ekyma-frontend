@@ -139,13 +139,13 @@
               </svg>
               Population et cas actifs
             </h2>
-            <div class="flex items-center">
-              <select v-model="activeCasesChartLimit" class="bg-slate-700 text-white rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 mr-2">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-0">
+              <select v-model="activeCasesChartLimit" class="bg-slate-700 text-white rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 w-full sm:w-auto sm:mr-2">
                 <option value="5">Top 5</option>
                 <option value="8">Top 8</option>
                 <option value="10">Top 10</option>
               </select>
-              <select v-model="activeCasesDisplayMode" class="bg-slate-700 text-white rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+              <select v-model="activeCasesDisplayMode" class="bg-slate-700 text-white rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 w-full sm:w-auto">
                 <option value="bar">Barres horizontales</option>
                 <option value="column">Barres verticales</option>
               </select>
