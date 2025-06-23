@@ -8,6 +8,7 @@
       <option value="fr">🇫🇷 {{ t('language.fr') }}</option>
       <option value="en">🇺🇸 {{ t('language.en') }}</option>
       <option value="de">🇩🇪 {{ t('language.de') }}</option>
+      <option value="it">🇮🇹 {{ t('language.it') }}</option>
     </select>
   </div>
 </template>

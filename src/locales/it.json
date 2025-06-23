@@ -1,0 +1,50 @@
+{
+  "dashboard": {
+    "title": "COVID-19 Dashboard",
+    "subtitle": "Dati globali in tempo reale",
+    "lastUpdate": "Ultimo aggiornamento: {{date}}",
+    "stats": {
+      "confirmedCases": "Casi Confermati",
+      "deaths": "Decessi",
+      "recovered": "Guariti",
+      "worldPopulation": "della popolazione mondiale",
+      "confirmedCasesRatio": "dei casi confermati",
+      "activeCases": "Popolazione e casi attivi"
+    },
+    "charts": {
+      "continentDistribution": "Distribuzione per continente",
+      "casesByCountry": "Casi per paese",
+      "deathsByCountry": "Decessi per paese",
+      "populationVsCases": "Relazione Popolazione vs Casi COVID",
+      "worldMap": "Mappa mondiale COVID-19",
+      "byContinent": "Per continente",
+      "byCountry": "Per paese",
+      "loadingMap": "Caricamento mappa..."
+    },
+    "controls": {
+      "totalCases": "Casi totali",
+      "totalDeaths": "Decessi",
+      "population": "Popolazione",
+      "top5": "Top 5",
+      "top8": "Top 8",
+      "top10": "Top 10",
+      "top15": "Top 15",
+      "top20": "Top 20",
+      "top30": "Top 30",
+      "horizontalBars": "Barre orizzontali",
+      "verticalBars": "Barre verticali"
+    },
+    "footer": {
+      "copyright": "© 2025 MSPR 6.1 - Dati aggiornati automaticamente ogni ora",
+      "about": "Chi siamo",
+      "api": "API",
+      "contact": "Contatto"
+    }
+  },
+  "language": {
+    "fr": "Français",
+    "en": "English",
+    "de": "Deutsch",
+    "it": "Italiano"
+  }
+} 
