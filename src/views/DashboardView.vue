@@ -9,13 +9,16 @@
             </svg>
           </div>
           <div>
-            <h1 class="text-3xl font-bold text-white">COVID-19 Dashboard</h1>
-            <p class="text-slate-400">Données mondiales en temps réel</p>
+            <h1 class="text-3xl font-bold text-white">{{ t('dashboard.title') }}</h1>
+            <p class="text-slate-400">{{ t('dashboard.subtitle') }}</p>
           </div>
         </div>
-        <div class="bg-slate-800 rounded-full px-4 py-2 text-sm font-medium text-slate-300 flex items-center">
-          <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>
-          Dernière mise à jour: {{ new Date().toLocaleDateString() }}
+        <div class="flex items-center space-x-4">
+          <LanguageSelector />
+          <div class="bg-slate-800 rounded-full px-4 py-2 text-sm font-medium text-slate-300 flex items-center">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>
+            {{ t('dashboard.lastUpdate', { date: new Date().toLocaleDateString() }) }}
+          </div>
         </div>
       </div>
 
@@ -27,10 +30,10 @@
             </svg>
           </div>
           <div class="flex flex-col justify-between h-full">
-            <p class="text-blue-200 font-medium mb-1">Cas Confirmés</p>
+            <p class="text-blue-200 font-medium mb-1">{{ t('dashboard.stats.confirmedCases') }}</p>
             <div>
               <p class="text-4xl font-bold text-white mb-1">{{ formattedRatioCases }}</p>
-              <p class="text-blue-200 text-sm">de la population mondiale</p>
+              <p class="text-blue-200 text-sm">{{ t('dashboard.stats.worldPopulation') }}</p>
             </div>
           </div>
         </div>
@@ -42,10 +45,10 @@
             </svg>
           </div>
           <div class="flex flex-col justify-between h-full">
-            <p class="text-rose-200 font-medium mb-1">Décès</p>
+            <p class="text-rose-200 font-medium mb-1">{{ t('dashboard.stats.deaths') }}</p>
             <div>
               <p class="text-4xl font-bold text-white mb-1">{{ formattedRatioDeaths }}</p>
-              <p class="text-rose-200 text-sm">des cas confirmés</p>
+              <p class="text-rose-200 text-sm">{{ t('dashboard.stats.confirmedCasesRatio') }}</p>
             </div>
           </div>
         </div>
@@ -57,10 +60,10 @@
             </svg>
           </div>
           <div class="flex flex-col justify-between h-full">
-            <p class="text-emerald-200 font-medium mb-1">Guérisons</p>
+            <p class="text-emerald-200 font-medium mb-1">{{ t('dashboard.stats.recovered') }}</p>
             <div>
               <p class="text-4xl font-bold text-white mb-1">{{ formattedRatioRecovered }}</p>
-              <p class="text-emerald-200 text-sm">des cas confirmés</p>
+              <p class="text-emerald-200 text-sm">{{ t('dashboard.stats.confirmedCasesRatio') }}</p>
             </div>
           </div>
         </div>
@@ -73,13 +76,13 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            Répartition par continent
+            {{ t('dashboard.charts.continentDistribution') }}
           </h2>
           <div class="flex items-center space-x-2">
             <select v-model="selectedMetricContinent" class="bg-slate-700 text-white rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-              <option value="total_cases">Cas totaux</option>
-              <option value="total_deaths">Décès</option>
-              <option value="population">Population</option>
+              <option value="total_cases">{{ t('dashboard.controls.totalCases') }}</option>
+              <option value="total_deaths">{{ t('dashboard.controls.totalDeaths') }}</option>
+              <option value="population">{{ t('dashboard.controls.population') }}</option>
             </select>
           </div>
         </div>
@@ -95,13 +98,13 @@
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              Cas par pays
+              {{ t('dashboard.charts.casesByCountry') }}
             </h2>
             <div class="flex items-center">
               <select v-model="casesChartLimit" class="bg-slate-700 text-white rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mr-2">
-                <option value="5">Top 5</option>
-                <option value="10">Top 10</option>
-                <option value="15">Top 15</option>
+                <option value="5">{{ t('dashboard.controls.top5') }}</option>
+                <option value="10">{{ t('dashboard.controls.top10') }}</option>
+                <option value="15">{{ t('dashboard.controls.top15') }}</option>
               </select>
             </div>
           </div>
@@ -116,13 +119,13 @@
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              Décès par pays
+              {{ t('dashboard.charts.deathsByCountry') }}
             </h2>
             <div class="flex items-center">
               <select v-model="deathChartLimit" class="bg-slate-700 text-white rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500 mr-2">
-                <option value="5">Top 5</option>
-                <option value="10">Top 10</option>
-                <option value="15">Top 15</option>
+                <option value="5">{{ t('dashboard.controls.top5') }}</option>
+                <option value="10">{{ t('dashboard.controls.top10') }}</option>
+                <option value="15">{{ t('dashboard.controls.top15') }}</option>
               </select>
             </div>
           </div>
@@ -137,17 +140,17 @@
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
-              Population et cas actifs
+              {{ t('dashboard.stats.activeCases') }}
             </h2>
             <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-0">
               <select v-model="activeCasesChartLimit" class="bg-slate-700 text-white rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 w-full sm:w-auto sm:mr-2">
-                <option value="5">Top 5</option>
-                <option value="8">Top 8</option>
-                <option value="10">Top 10</option>
+                <option value="5">{{ t('dashboard.controls.top5') }}</option>
+                <option value="8">{{ t('dashboard.controls.top8') }}</option>
+                <option value="10">{{ t('dashboard.controls.top10') }}</option>
               </select>
               <select v-model="activeCasesDisplayMode" class="bg-slate-700 text-white rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 w-full sm:w-auto">
-                <option value="bar">Barres horizontales</option>
-                <option value="column">Barres verticales</option>
+                <option value="bar">{{ t('dashboard.controls.horizontalBars') }}</option>
+                <option value="column">{{ t('dashboard.controls.verticalBars') }}</option>
               </select>
             </div>
           </div>
@@ -164,13 +167,13 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
-            Relation Population vs Cas COVID
+            {{ t('dashboard.charts.populationVsCases') }}
           </h2>
           <div class="flex items-center space-x-2">
             <select v-model="selectedTopCount" class="bg-slate-700 text-white rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
-              <option value="10">Top 10</option>
-              <option value="20">Top 20</option>
-              <option value="30">Top 30</option>
+              <option value="10">{{ t('dashboard.controls.top10') }}</option>
+              <option value="20">{{ t('dashboard.controls.top20') }}</option>
+              <option value="30">{{ t('dashboard.controls.top30') }}</option>
             </select>
           </div>
         </div>
@@ -185,7 +188,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
             </svg>
-            Carte mondiale des cas COVID-19
+            {{ t('dashboard.charts.worldMap') }}
           </h2>
           <div class="flex items-center space-x-2">
             <button 
@@ -197,7 +200,7 @@
                   : 'bg-slate-700 hover:bg-slate-600 text-white'
               ]"
             >
-              Par continent
+              {{ t('dashboard.charts.byContinent') }}
             </button>
             <button 
               @click="mapView = 'country'" 
@@ -208,7 +211,7 @@
                   : 'bg-slate-700 hover:bg-slate-600 text-white'
               ]"
             >
-              Par pays
+              {{ t('dashboard.charts.byCountry') }}
             </button>
           </div>
         </div>
@@ -224,18 +227,18 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                 </svg>
               </div>
-              <p class="text-slate-400 text-sm">Chargement de la carte...</p>
+              <p class="text-slate-400 text-sm">{{ t('dashboard.charts.loadingMap') }}</p>
             </div>
           </div>
         </div>
       </div>
 
       <footer class="text-center text-slate-500 text-sm py-6 border-t border-slate-800">
-        <p>© 2025 MSPR 6.1 - Données actualisées automatiquement toutes les heures</p>
+        <p>{{ t('dashboard.footer.copyright') }}</p>
         <div class="flex justify-center mt-3 space-x-4">
-          <a href="#" class="text-slate-400 hover:text-white transition-colors">À propos</a>
-          <a href="#" class="text-slate-400 hover:text-white transition-colors">API</a>
-          <a href="#" class="text-slate-400 hover:text-white transition-colors">Contact</a>
+          <a href="#" class="text-slate-400 hover:text-white transition-colors">{{ t('dashboard.footer.about') }}</a>
+          <a href="#" class="text-slate-400 hover:text-white transition-colors">{{ t('dashboard.footer.api') }}</a>
+          <a href="#" class="text-slate-400 hover:text-white transition-colors">{{ t('dashboard.footer.contact') }}</a>
         </div>
       </footer>
     </div>
@@ -250,7 +253,11 @@ import ActiveCasesChart from "../components/ActiveCasesChart.vue";
 import ContinentChart from "../components/ContinentChart.vue";
 import ScatterChart from "../components/ScatterChart.vue";
 import CovidMap from "../components/CovidMap.vue";
+import LanguageSelector from "../components/LanguageSelector.vue";
 import {API_URL} from "../constants.js";
+import { useI18n } from '../composables/useI18n.js';
+
+const { t } = useI18n();
 
 const pieChartData = ref([]);
 const squareData = ref({

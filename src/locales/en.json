@@ -1,0 +1,48 @@
+{
+  "dashboard": {
+    "title": "COVID-19 Dashboard",
+    "subtitle": "Real-time global data",
+    "lastUpdate": "Last update: {{date}}",
+    "stats": {
+      "confirmedCases": "Confirmed Cases",
+      "deaths": "Deaths",
+      "recovered": "Recovered",
+      "worldPopulation": "of world population",
+      "confirmedCasesRatio": "of confirmed cases",
+      "activeCases": "Population and active cases"
+    },
+    "charts": {
+      "continentDistribution": "Distribution by continent",
+      "casesByCountry": "Cases by country",
+      "deathsByCountry": "Deaths by country",
+      "populationVsCases": "Population vs COVID Cases Relationship",
+      "worldMap": "COVID-19 world map",
+      "byContinent": "By continent",
+      "byCountry": "By country",
+      "loadingMap": "Loading map..."
+    },
+    "controls": {
+      "totalCases": "Total cases",
+      "totalDeaths": "Deaths",
+      "population": "Population",
+      "top5": "Top 5",
+      "top8": "Top 8",
+      "top10": "Top 10",
+      "top15": "Top 15",
+      "top20": "Top 20",
+      "top30": "Top 30",
+      "horizontalBars": "Horizontal bars",
+      "verticalBars": "Vertical bars"
+    },
+    "footer": {
+      "copyright": "© 2025 MSPR 6.1 - Data updated automatically every hour",
+      "about": "About",
+      "api": "API",
+      "contact": "Contact"
+    }
+  },
+  "language": {
+    "fr": "Français",
+    "en": "English"
+  }
+} 

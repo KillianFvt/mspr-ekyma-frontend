@@ -1,0 +1,48 @@
+{
+  "dashboard": {
+    "title": "COVID-19 Dashboard",
+    "subtitle": "Données mondiales en temps réel",
+    "lastUpdate": "Dernière mise à jour: {{date}}",
+    "stats": {
+      "confirmedCases": "Cas Confirmés",
+      "deaths": "Décès",
+      "recovered": "Guérisons",
+      "worldPopulation": "de la population mondiale",
+      "confirmedCasesRatio": "des cas confirmés",
+      "activeCases": "Population et cas actifs"
+    },
+    "charts": {
+      "continentDistribution": "Répartition par continent",
+      "casesByCountry": "Cas par pays",
+      "deathsByCountry": "Décès par pays",
+      "populationVsCases": "Relation Population vs Cas COVID",
+      "worldMap": "Carte mondiale des cas COVID-19",
+      "byContinent": "Par continent", 
+      "byCountry": "Par pays",
+      "loadingMap": "Chargement de la carte..."
+    },
+    "controls": {
+      "totalCases": "Cas totaux",
+      "totalDeaths": "Décès",
+      "population": "Population",
+      "top5": "Top 5",
+      "top8": "Top 8",
+      "top10": "Top 10",
+      "top15": "Top 15",
+      "top20": "Top 20",
+      "top30": "Top 30",
+      "horizontalBars": "Barres horizontales",
+      "verticalBars": "Barres verticales"
+    },
+    "footer": {
+      "copyright": "© 2025 MSPR 6.1 - Données actualisées automatiquement toutes les heures",
+      "about": "À propos",
+      "api": "API",
+      "contact": "Contact"
+    }
+  },
+  "language": {
+    "fr": "Français",
+    "en": "English"
+  }
+} 
