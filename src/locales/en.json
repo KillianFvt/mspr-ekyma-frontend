@@ -7,7 +7,7 @@
       "confirmedCases": "Confirmed Cases",
       "deaths": "Deaths",
       "recovered": "Recovered",
-      "worldPopulation": "of world population",
+      "worldPopulation": "of the world population",
       "confirmedCasesRatio": "of confirmed cases",
       "activeCases": "Population and active cases"
     },
@@ -16,7 +16,7 @@
       "casesByCountry": "Cases by country",
       "deathsByCountry": "Deaths by country",
       "populationVsCases": "Population vs COVID Cases Relationship",
-      "worldMap": "COVID-19 world map",
+      "worldMap": "World map of COVID-19 cases",
       "byContinent": "By continent",
       "byCountry": "By country",
       "loadingMap": "Loading map..."
@@ -35,11 +35,31 @@
       "verticalBars": "Vertical bars"
     },
     "footer": {
-      "copyright": "© 2025 MSPR 6.1 - Data updated automatically every hour",
+      "copyright": "© 2025 MSPR 6.1 - Data automatically updated every hour",
       "about": "About",
       "api": "API",
       "contact": "Contact"
     }
+  },
+  "upload": {
+    "title": "CSV Data Processor",
+    "subtitle": "Upload, convert and analyze your data",
+    "ready": "Ready",
+    "formTitle": "CSV File Upload",
+    "formSubtitle": "Drag and drop your CSV file or click to select",
+    "dropZone": "Drop your CSV file here",
+    "or": "or",
+    "browse": "Browse files",
+    "formats": "Supported formats: CSV only",
+    "csvConfig": "CSV Configuration",
+    "delimiter": "Delimiter",
+    "hasHeaders": "File contains headers",
+    "apiConfig": "API Configuration",
+    "apiEndpoint": "API URL",
+    "method": "HTTP Method",
+    "process": "Process file",
+    "processing": "Processing...",
+    "results": "API Results"
   },
   "language": {
     "fr": "Français",
