@@ -1,6 +1,17 @@
 <template>
-  <div class="min-h-screen bg-slate-900 text-white p-4 sm:p-6">
-    <div class="max-w-4xl mx-auto">
+  <div class="min-h-screen bg-slate-900 text-white p-4 sm:p-6 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-emerald-900/20"></div>
+    
+    <div class="absolute inset-0">
+      <div class="absolute top-20 left-20 w-32 h-32 bg-emerald-500/10 rounded-full blur-xl animate-pulse"></div>
+      <div class="absolute top-40 right-32 w-24 h-24 bg-blue-500/10 rounded-full blur-xl animate-pulse delay-1000"></div>
+      <div class="absolute bottom-32 left-32 w-40 h-40 bg-purple-500/10 rounded-full blur-xl animate-pulse delay-2000"></div>
+      <div class="absolute bottom-20 right-20 w-28 h-28 bg-emerald-500/10 rounded-full blur-xl animate-pulse delay-500"></div>
+      <div class="absolute top-1/2 left-1/4 w-20 h-20 bg-blue-500/5 rounded-full blur-xl animate-pulse delay-3000"></div>
+      <div class="absolute top-1/3 right-1/4 w-36 h-36 bg-purple-500/5 rounded-full blur-xl animate-pulse delay-4000"></div>
+    </div>
+
+    <div class="relative z-10 max-w-4xl mx-auto">
       <div class="flex flex-col sm:flex-row items-center justify-between mb-8 pb-4 border-b border-slate-700 animate-fade-in">
         <div class="flex items-center mb-4 sm:mb-0">
           <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 p-3 rounded-lg mr-4 shadow-lg animate-pulse-slow">
@@ -433,6 +444,14 @@ const processFile = async () => {
 
 .animate-pulse-slow {
   animation: pulse-slow 3s ease-in-out infinite;
+}
+
+.delay-3000 {
+  animation-delay: 3s;
+}
+
+.delay-4000 {
+  animation-delay: 4s;
 }
 
 .bg-slate-800 {
