@@ -1,28 +1,46 @@
 <template>
   <div class="min-h-screen bg-slate-900 text-white p-4 sm:p-6">
     <div class="max-w-4xl mx-auto">
-      <div class="flex flex-col sm:flex-row items-center justify-between mb-8 pb-4 border-b border-slate-700">
+      <div class="flex flex-col sm:flex-row items-center justify-between mb-8 pb-4 border-b border-slate-700 animate-fade-in">
         <div class="flex items-center mb-4 sm:mb-0">
-          <div class="bg-emerald-500 p-3 rounded-lg mr-4">
+          <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 p-3 rounded-lg mr-4 shadow-lg animate-pulse-slow">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
             </svg>
           </div>
           <div>
-            <h1 class="text-3xl font-bold text-white">{{ t('upload.title') }}</h1>
+            <h1 class="text-3xl font-bold text-white mb-1">{{ t('upload.title') }}</h1>
             <p class="text-slate-400">{{ t('upload.subtitle') }}</p>
+            <div class="flex items-center mt-2">
+              <div class="w-2 h-2 bg-emerald-400 rounded-full mr-2 animate-pulse"></div>
+              <span class="text-emerald-400 text-sm font-medium">Connecté et prêt</span>
+            </div>
           </div>
         </div>
         <div class="flex items-center space-x-4">
           <LanguageSelector />
-          <div class="bg-slate-800 rounded-full px-4 py-2 text-sm font-medium text-slate-300 flex items-center">
+          <div class="bg-slate-800/80 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-medium text-slate-300 flex items-center border border-slate-700">
             <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>
             {{ t('upload.ready') }}
+          </div>
+          <div class="relative group">
+            <button 
+              @click="$emit('logout')"
+              class="bg-slate-800/80 backdrop-blur-sm hover:bg-red-600 text-slate-300 hover:text-white px-4 py-2 rounded-lg border border-slate-600 hover:border-red-500 transition-all duration-300 flex items-center space-x-2 group shadow-lg hover:shadow-xl"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              <span class="hidden sm:inline">Se déconnecter</span>
+            </button>
+            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-slate-700 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+              Déconnexion sécurisée
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="bg-slate-800 rounded-xl p-8 shadow-lg mb-8">
+      <div class="bg-slate-800 rounded-xl p-8 shadow-lg mb-8 animate-slide-up" style="animation-delay: 0.1s;">
         <div class="text-center mb-8">
           <div class="bg-gradient-to-br from-blue-900 to-blue-700 p-4 rounded-full w-20 h-20 mx-auto mb-4 flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -149,7 +167,7 @@
 
       <div v-if="apiResponse && apiResponse.success" class="space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="bg-gradient-to-br from-purple-900 to-purple-700 rounded-xl p-6 text-white">
+          <div class="bg-gradient-to-br from-purple-900 to-purple-700 rounded-xl p-6 text-white animate-slide-up" style="animation-delay: 0.2s;">
             <div class="flex items-center mb-3">
               <div class="bg-purple-500 p-2 rounded-lg mr-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -166,7 +184,7 @@
             </div>
           </div>
 
-          <div class="bg-gradient-to-br from-blue-900 to-blue-700 rounded-xl p-6 text-white">
+          <div class="bg-gradient-to-br from-blue-900 to-blue-700 rounded-xl p-6 text-white animate-slide-up" style="animation-delay: 0.3s;">
             <div class="flex items-center mb-3">
               <div class="bg-blue-500 p-2 rounded-lg mr-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -191,7 +209,7 @@
             </div>
           </div>
 
-          <div class="bg-gradient-to-br from-emerald-900 to-emerald-700 rounded-xl p-6 text-white">
+          <div class="bg-gradient-to-br from-emerald-900 to-emerald-700 rounded-xl p-6 text-white animate-slide-up" style="animation-delay: 0.4s;">
             <div class="flex items-center mb-3">
               <div class="bg-emerald-500 p-2 rounded-lg mr-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -217,7 +235,7 @@
           </div>
         </div>
 
-        <div class="bg-slate-800 rounded-xl p-6 shadow-lg">
+        <div class="bg-slate-800 rounded-xl p-6 shadow-lg animate-slide-up" style="animation-delay: 0.5s;">
           <div class="flex items-center justify-between mb-6">
             <h2 class="text-xl font-semibold text-white flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -232,7 +250,7 @@
           <PredictionChart :data="apiResponse" />
         </div>
 
-        <div class="bg-slate-800 rounded-xl p-6 shadow-lg">
+        <div class="bg-slate-800 rounded-xl p-6 shadow-lg animate-slide-up" style="animation-delay: 0.6s;">
           <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
@@ -279,7 +297,7 @@
         </div>
       </div>
 
-      <div v-else-if="apiResponse && !apiResponse.success" class="bg-slate-800 rounded-xl p-6 shadow-lg border border-red-500/20">
+      <div v-else-if="apiResponse && !apiResponse.success" class="bg-slate-800 rounded-xl p-6 shadow-lg border border-red-500/20 animate-slide-up" style="animation-delay: 0.2s;">
         <h2 class="text-xl font-semibold text-white mb-4 flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -299,6 +317,8 @@ import { ref, computed } from 'vue'
 import { useI18n } from '../composables/useI18n.js'
 import LanguageSelector from '../components/LanguageSelector.vue'
 import PredictionChart from '../components/PredictionChart.vue'
+
+const emit = defineEmits(['logout'])
 
 const { t } = useI18n()
 
@@ -369,5 +389,67 @@ const processFile = async () => {
 <style scoped>
 .chart-container {
   height: 300px;
+}
+
+/* Animations de fou */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-out both;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
+.bg-slate-800 {
+  transition: all 0.3s ease;
+}
+
+.bg-slate-800:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.bg-gradient-to-br {
+  transition: all 0.3s ease;
+}
+
+.bg-gradient-to-br:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
 }
 </style>
