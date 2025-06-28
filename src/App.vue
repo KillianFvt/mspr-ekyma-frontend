@@ -1,15 +1,20 @@
 <template>
-  <DashboardView />
+  <div>
+    <LoginView v-if="showLogin" />
+    <DashboardView v-else @logout="handleLogout" />
+  </div>
 </template>
 
 <script>
 import { ref, onMounted, onUnmounted } from 'vue'
 import DashboardView from "./views/DashboardView.vue"
+import LoginView from "./views/LoginView.vue"
 
 export default {
   name: 'App',
   components: {
-    DashboardView
+    DashboardView,
+    LoginView
   },
   setup() {
     const showLogin = ref(true)
