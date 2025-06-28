@@ -3,11 +3,13 @@
 </template>
 
 <script>
+import { ref, onMounted, onUnmounted } from 'vue'
+import DashboardView from "./views/DashboardView.vue"
+
 export default {
   name: 'App',
   components: {
-    DashboardView,
-    LoginView
+    DashboardView
   },
   setup() {
     const showLogin = ref(true)
