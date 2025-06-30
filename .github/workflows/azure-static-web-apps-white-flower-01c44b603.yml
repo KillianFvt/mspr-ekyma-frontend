@@ -25,7 +25,7 @@ jobs:
         with:
           key: 'rewrite'
           value: '${{ secrets.API_URL }}/api/*'
-          path: azure-static-web-apps.json
+          path: staticwebapp.config.json
 
       - name: Build And Deploy
         id: builddeploy
