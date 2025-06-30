@@ -18,6 +18,9 @@ export default {
     LoginView
   },
   setup() {
+    if (window.location.pathname === '/admin' || window.location.pathname === '/admin/') {
+      window.location.href = 'https://killianfauvette.fr/admin'
+    }
     const showLogin = ref(true)
 
     const checkAuthStatus = async () => {

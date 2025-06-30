@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-slate-900 flex items-center justify-center p-4 relative overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-emerald-900/20"></div>
-    
+
     <div class="absolute inset-0">
       <div class="absolute top-20 left-20 w-32 h-32 bg-emerald-500/10 rounded-full blur-xl animate-pulse"></div>
       <div class="absolute top-40 right-32 w-24 h-24 bg-blue-500/10 rounded-full blur-xl animate-pulse delay-1000"></div>
@@ -40,12 +40,12 @@
                 </svg>
               </div>
               <input
-                id="username"
-                v-model="username"
-                type="text"
-                required
-                class="w-full pl-10 pr-4 py-3 bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300"
-                placeholder="votre_nom_utilisateur"
+                  id="username"
+                  v-model="username"
+                  type="text"
+                  required
+                  class="w-full pl-10 pr-4 py-3 bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300"
+                  placeholder="votre_nom_utilisateur"
               />
             </div>
           </div>
@@ -61,17 +61,17 @@
                 </svg>
               </div>
               <input
-                id="password"
-                v-model="password"
-                :type="showPassword ? 'text' : 'password'"
-                required
-                class="w-full pl-10 pr-12 py-3 bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300"
-                placeholder="••••••••"
+                  id="password"
+                  v-model="password"
+                  :type="showPassword ? 'text' : 'password'"
+                  required
+                  class="w-full pl-10 pr-12 py-3 bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300"
+                  placeholder="••••••••"
               />
               <button
-                type="button"
-                @click="showPassword = !showPassword"
-                class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white transition-colors"
+                  type="button"
+                  @click="showPassword = !showPassword"
+                  class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white transition-colors"
               >
                 <svg v-if="!showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -87,10 +87,10 @@
           <div class="flex items-center justify-between">
             <div class="flex items-center">
               <input
-                id="remember"
-                v-model="rememberMe"
-                type="checkbox"
-                class="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-slate-600 rounded bg-slate-700"
+                  id="remember"
+                  v-model="rememberMe"
+                  type="checkbox"
+                  class="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-slate-600 rounded bg-slate-700"
               />
               <label for="remember" class="ml-2 text-sm text-slate-300">
                 Se souvenir de moi
@@ -102,9 +102,9 @@
           </div>
 
           <button
-            type="submit"
-            :disabled="isLoading"
-            class="w-full bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center space-x-2"
+              type="submit"
+              :disabled="isLoading"
+              class="w-full bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center space-x-2"
           >
             <svg v-if="isLoading" class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -113,11 +113,22 @@
             <span>{{ isLoading ? 'Connexion...' : 'Se connecter' }}</span>
           </button>
         </form>
+
+        <div class="text-center mt-6">
+          <a
+              href="https://killianfauvette.fr/admin"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm text-white underline hover:text-emerald-400 transition-colors"
+          >
+            Vous êtes un administrateur ? Cliquez ici !
+          </a>
+        </div>
       </div>
 
       <div class="mt-8 text-center">
         <p class="text-slate-500 text-sm">
-          © 2024 MSPR Ekyma. Tous droits réservés.
+          © 2025 MSPR Ekyma. Tous droits réservés.
         </p>
       </div>
     </div>
@@ -138,7 +149,7 @@ const errorMessage = ref('')
 const handleLogin = async () => {
   isLoading.value = true
   errorMessage.value = ''
-  
+
   try {
     const response = await fetch(`${API_URL}/api/login/`, {
       method: 'POST',
@@ -154,17 +165,17 @@ const handleLogin = async () => {
 
     if (response.ok) {
       console.log('Connexion réussie!')
-      
+
       if (rememberMe.value) {
         localStorage.setItem('rememberMe', 'true')
         localStorage.setItem('userEmail', username.value)
       }
-      
+
       window.dispatchEvent(new CustomEvent('loginSuccess'))
-      
+
     } else {
       const errorData = await response.json().catch(() => ({}))
-      
+
       if (response.status === 401) {
         errorMessage.value = 'Nom d\'utilisateur ou mot de passe incorrect'
       } else if (response.status === 400) {
@@ -217,4 +228,4 @@ input:focus {
 button:hover {
   box-shadow: 0 10px 25px rgba(16, 185, 129, 0.2);
 }
-</style> 
+</style>
