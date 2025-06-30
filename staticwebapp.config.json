@@ -2,7 +2,7 @@
   "routes": [
     {
       "route": "/api/*",
-      "rewrite": "http://98.66.137.88/api/*"
+      "rewrite": "API_URL/api/*"
     }
   ]
 }
