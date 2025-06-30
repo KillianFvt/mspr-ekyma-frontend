@@ -126,6 +126,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import {API_URL} from "../constants.js";
 
 const username = ref('')
 const password = ref('')
@@ -139,7 +140,7 @@ const handleLogin = async () => {
   errorMessage.value = ''
   
   try {
-    const response = await fetch('/api/login/', {
+    const response = await fetch(`${API_URL}/api/login/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

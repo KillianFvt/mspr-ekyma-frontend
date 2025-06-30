@@ -9,6 +9,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import DashboardView from "./views/DashboardView.vue"
 import LoginView from "./views/LoginView.vue"
+import {API_URL} from "./constants.js";
 
 export default {
   name: 'App',
@@ -21,7 +22,7 @@ export default {
 
     const checkAuthStatus = async () => {
       try {
-        const response = await fetch('/api/protected/', {
+        const response = await fetch(`${API_URL}/api/protected/`, {
           method: 'GET',
           credentials: 'include'
         })
@@ -40,7 +41,7 @@ export default {
 
     const handleLogout = async () => {
       try {
-        const response = await fetch('/api/logout/', {
+        const response = await fetch(`${API_URL}/api/logout/`, {
           method: 'POST',
           credentials: 'include'
         })

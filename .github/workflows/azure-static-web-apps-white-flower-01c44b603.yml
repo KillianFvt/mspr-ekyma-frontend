@@ -20,12 +20,12 @@ jobs:
           submodules: true
           lfs: false
 
-      - name: Replace API URL in azure-static-web-apps config
-        uses: maxgfr/github-change-json@main
-        with:
-          key: 'rewrite'
-          value: '${{ secrets.API_URL }}/api/*'
-          path: staticwebapp.config.json
+#      - name: Replace API URL in azure-static-web-apps config
+#        uses: maxgfr/github-change-json@main
+#        with:
+#          key: 'rewrite'
+#          value: '${{ secrets.API_URL }}/api/*'
+#          path: staticwebapp.config.json
 
       - name: Build And Deploy
         id: builddeploy
