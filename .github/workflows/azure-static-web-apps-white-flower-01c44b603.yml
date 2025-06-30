@@ -23,8 +23,8 @@ jobs:
       - name: Replace API URL in azure-static-web-apps config
         uses: maxgfr/github-change-json@main
         with:
-          key: 'API_URL'
-          value: ${{ secrets.API_URL }}
+          key: 'rewrite'
+          value: '${{ secrets.API_URL }}/api/*'
           path: azure-static-web-apps.json
 
       - name: Build And Deploy
