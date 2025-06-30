@@ -1,7 +1,7 @@
 {
   "dashboard": {
     "title": "COVID-19 Dashboard",
-    "subtitle": "Globale Daten in Echtzeit",
+    "subtitle": "Globale Echtzeitdaten",
     "lastUpdate": "Letzte Aktualisierung: {{date}}",
     "stats": {
       "confirmedCases": "Bestätigte Fälle",
@@ -16,13 +16,13 @@
       "casesByCountry": "Fälle nach Ländern",
       "deathsByCountry": "Todesfälle nach Ländern",
       "populationVsCases": "Bevölkerung vs COVID-Fälle Beziehung",
-      "worldMap": "COVID-19 Weltkarte",
+      "worldMap": "Weltkarte der COVID-19-Fälle",
       "byContinent": "Nach Kontinenten",
       "byCountry": "Nach Ländern",
       "loadingMap": "Karte wird geladen..."
     },
     "controls": {
-      "totalCases": "Gesamte Fälle",
+      "totalCases": "Gesamtfälle",
       "totalDeaths": "Todesfälle",
       "population": "Bevölkerung",
       "top5": "Top 5",
@@ -40,6 +40,43 @@
       "api": "API",
       "contact": "Kontakt"
     }
+  },
+  "upload": {
+    "title": "CSV-Datenverarbeitung",
+    "subtitle": "Laden Sie hoch, konvertieren und analysieren Sie Ihre Daten",
+    "ready": "Bereit",
+    "formTitle": "CSV-Datei hochladen",
+    "formSubtitle": "Ziehen Sie Ihre CSV-Datei hier her oder klicken Sie zum Auswählen",
+    "dropZone": "CSV-Datei hier ablegen",
+    "or": "oder",
+    "browse": "Dateien durchsuchen",
+    "formats": "Unterstützte Formate: Nur CSV",
+    "csvConfig": "CSV-Konfiguration",
+    "delimiter": "Trennzeichen",
+    "hasHeaders": "Datei enthält Kopfzeilen",
+    "apiConfig": "API-Konfiguration",
+    "apiEndpoint": "API-URL",
+    "method": "HTTP-Methode",
+    "process": "Datei verarbeiten",
+    "processing": "Verarbeitung läuft...",
+    "results": "API-Ergebnisse",
+    "modelInfo": "Modellinformationen",
+    "summary": "Zusammenfassung",
+    "totalMonths": "Gesamtmonate",
+    "averageCases": "Durchschnittliche Fälle",
+    "trend": "Trend",
+    "peakAnalysis": "Spitzenwert-Analyse",
+    "peakCases": "Spitzenfälle",
+    "peakMonth": "Spitzenmonat",
+    "lowestCases": "Niedrigste Fälle",
+    "month": "Monat",
+    "predictionChart": "Prognose-Diagramm",
+    "detailedPredictions": "Detaillierte Prognosen",
+    "season": "Jahreszeit",
+    "predictedCases": "Prognostizierte Fälle",
+    "temperature": "Temperatur",
+    "precipitation": "Niederschlag",
+    "error": "Fehler"
   },
   "language": {
     "fr": "Français",

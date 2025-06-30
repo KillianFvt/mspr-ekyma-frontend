@@ -1,6 +1,6 @@
 {
   "dashboard": {
-    "title": "COVID-19 Dashboard",
+    "title": "Dashboard COVID-19",
     "subtitle": "Dati globali in tempo reale",
     "lastUpdate": "Ultimo aggiornamento: {{date}}",
     "stats": {
@@ -16,7 +16,7 @@
       "casesByCountry": "Casi per paese",
       "deathsByCountry": "Decessi per paese",
       "populationVsCases": "Relazione Popolazione vs Casi COVID",
-      "worldMap": "Mappa mondiale COVID-19",
+      "worldMap": "Mappa mondiale dei casi COVID-19",
       "byContinent": "Per continente",
       "byCountry": "Per paese",
       "loadingMap": "Caricamento mappa..."
@@ -36,10 +36,47 @@
     },
     "footer": {
       "copyright": "© 2025 MSPR 6.1 - Dati aggiornati automaticamente ogni ora",
-      "about": "Chi siamo",
+      "about": "Informazioni",
       "api": "API",
       "contact": "Contatto"
     }
+  },
+  "upload": {
+    "title": "Processore di dati CSV",
+    "subtitle": "Carica, converti e analizza i tuoi dati",
+    "ready": "Pronto",
+    "formTitle": "Caricamento file CSV",
+    "formSubtitle": "Trascina il tuo file CSV qui o clicca per selezionare",
+    "dropZone": "Rilascia il tuo file CSV qui",
+    "or": "o",
+    "browse": "Sfoglia file",
+    "formats": "Formati supportati: Solo CSV",
+    "csvConfig": "Configurazione CSV",
+    "delimiter": "Delimitatore",
+    "hasHeaders": "Il file contiene intestazioni",
+    "apiConfig": "Configurazione API",
+    "apiEndpoint": "URL API",
+    "method": "Metodo HTTP",
+    "process": "Elabora file",
+    "processing": "Elaborazione in corso...",
+    "results": "Risultati API",
+    "modelInfo": "Informazioni Modello",
+    "summary": "Riepilogo",
+    "totalMonths": "Mesi totali",
+    "averageCases": "Casi medi",
+    "trend": "Tendenza",
+    "peakAnalysis": "Analisi Picco",
+    "peakCases": "Picco di casi",
+    "peakMonth": "Mese di picco",
+    "lowestCases": "Casi minimi",
+    "month": "Mese",
+    "predictionChart": "Grafico Previsioni",
+    "detailedPredictions": "Previsioni Dettagliate",
+    "season": "Stagione",
+    "predictedCases": "Casi previsti",
+    "temperature": "Temperatura",
+    "precipitation": "Precipitazioni",
+    "error": "Errore"
   },
   "language": {
     "fr": "Français",
