@@ -44,60 +44,97 @@ const chartCanvas = ref(null)
 let chartInstance = null
 
 const createChart = () => {
-  if (!chartCanvas.value || !props.data?.sequence_predictions) return
+  if (!chartCanvas.value || !props.data) return
 
   if (chartInstance) {
     chartInstance.destroy()
   }
 
-  const predictions = props.data.sequence_predictions
-  
-  const months = predictions.map(p => {
-    const monthNames = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc']
-    return monthNames[p.month_info.month - 1] || `Mois ${p.month_index}`
-  })
-  
-  const predictedCases = predictions.map(p => Math.round(p.predicted_cases))
-  const previousCases = predictions.map(p => Math.round(p.previous_month_cases))
-  const casesTrend = predictions.map(p => Math.round(p.cases_trend))
-  const trendPercentage = predictions.map(p => Math.round(p.trend_percentage * 100) / 100)
+  let predictions, labels, predictedCases, additionalData
+
+  if (props.data.predictions && Array.isArray(props.data.predictions)) {
+    predictions = props.data.predictions
+    
+    labels = predictions.map(p => {
+      const date = new Date(p.date)
+      return date.toLocaleDateString('fr-FR', { 
+        day: '2-digit', 
+        month: 'short' 
+      })
+    })
+    
+    predictedCases = predictions.map(p => Math.round(p.prediction))
+    
+    additionalData = predictions.map(p => ({
+      date: p.date,
+      location: p.location,
+      prediction: p.prediction
+    }))
+  } 
+  else if (props.data.sequence_predictions && Array.isArray(props.data.sequence_predictions)) {
+    predictions = props.data.sequence_predictions
+    
+    const months = predictions.map(p => {
+      const monthNames = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc']
+      return monthNames[p.month_info.month - 1] || `Mois ${p.month_index}`
+    })
+    
+    labels = months
+    predictedCases = predictions.map(p => Math.round(p.predicted_cases))
+    
+    additionalData = predictions.map(p => ({
+      season: p.month_info.season_name,
+      temperature: p.weather_input.temperature_moyenne,
+      precipitation: p.weather_input.precipitation_mm,
+      humidity: p.weather_input.humidite_moyenne,
+      insolation: p.weather_input.insolation_hours
+    }))
+  } else {
+    return
+  }
 
   const ctx = chartCanvas.value.getContext('2d')
+  
+  const datasets = [
+    {
+      label: 'Cas prédits',
+      data: predictedCases,
+      borderColor: 'rgb(16, 185, 129)',
+      backgroundColor: 'rgba(16, 185, 129, 0.1)',
+      borderWidth: 3,
+      fill: true,
+      tension: 0.4,
+      pointBackgroundColor: 'rgb(16, 185, 129)',
+      pointBorderColor: '#ffffff',
+      pointBorderWidth: 2,
+      pointRadius: 6,
+      yAxisID: 'y'
+    }
+  ]
+
+  if (props.data.sequence_predictions) {
+    const trendPercentage = predictions.map(p => Math.round(p.trend_percentage * 100) / 100)
+    datasets.push({
+      label: 'Tendance (%)',
+      data: trendPercentage,
+      type: 'bar',
+      backgroundColor: trendPercentage.map(val => 
+        val > 0 ? 'rgba(34, 197, 94, 0.7)' : 'rgba(239, 68, 68, 0.7)'
+      ),
+      borderColor: trendPercentage.map(val => 
+        val > 0 ? 'rgb(34, 197, 94)' : 'rgb(239, 68, 68)'
+      ),
+      borderWidth: 1,
+      yAxisID: 'y1',
+      order: 1
+    })
+  }
   
   chartInstance = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: months,
-      datasets: [
-        {
-          label: 'Cas prédits',
-          data: predictedCases,
-          borderColor: 'rgb(16, 185, 129)',
-          backgroundColor: 'rgba(16, 185, 129, 0.1)',
-          borderWidth: 3,
-          fill: true,
-          tension: 0.4,
-          pointBackgroundColor: 'rgb(16, 185, 129)',
-          pointBorderColor: '#ffffff',
-          pointBorderWidth: 2,
-          pointRadius: 6,
-          yAxisID: 'y'
-        },
-        {
-          label: 'Tendance (%)',
-          data: trendPercentage,
-          type: 'bar',
-          backgroundColor: trendPercentage.map(val => 
-            val > 0 ? 'rgba(34, 197, 94, 0.7)' : 'rgba(239, 68, 68, 0.7)'
-          ),
-          borderColor: trendPercentage.map(val => 
-            val > 0 ? 'rgb(34, 197, 94)' : 'rgb(239, 68, 68)'
-          ),
-          borderWidth: 1,
-          yAxisID: 'y1',
-          order: 1
-        }
-      ]
+      labels: labels,
+      datasets: datasets
     },
     options: {
       responsive: true,
@@ -147,16 +184,26 @@ const createChart = () => {
               }
             },
             afterBody: function(tooltipItems) {
-              const monthIndex = tooltipItems[0].dataIndex
-              const prediction = predictions[monthIndex]
-              return [
-                '',
-                `Saison: ${prediction.month_info.season_name}`,
-                `Température: ${prediction.weather_input.temperature_moyenne}°C`,
-                `Précipitations: ${prediction.weather_input.precipitation_mm}mm`,
-                `Humidité: ${prediction.weather_input.humidite_moyenne}%`,
-                `Insolation: ${prediction.weather_input.insolation_hours}h`
-              ]
+              const dataIndex = tooltipItems[0].dataIndex
+              const additional = additionalData[dataIndex]
+              
+              if (props.data.predictions) {
+                return [
+                  '',
+                  `Date: ${additional.date}`,
+                  `Lieu: ${additional.location}`,
+                  `Valeur exacte: ${additional.prediction.toFixed(2)}`
+                ]
+              } else {
+                return [
+                  '',
+                  `Saison: ${additional.season}`,
+                  `Température: ${additional.temperature}°C`,
+                  `Précipitations: ${additional.precipitation}mm`,
+                  `Humidité: ${additional.humidity}%`,
+                  `Insolation: ${additional.insolation}h`
+                ]
+              }
             }
           }
         }
@@ -191,7 +238,7 @@ const createChart = () => {
             color: '#e2e8f0'
           }
         },
-        y1: {
+        y1: props.data.sequence_predictions ? {
           type: 'linear',
           display: true,
           position: 'right',
@@ -210,7 +257,7 @@ const createChart = () => {
             text: 'Tendance (%)',
             color: '#e2e8f0'
           }
-        }
+        } : undefined
       },
       elements: {
         point: {

@@ -176,8 +176,76 @@
         </div>
       </div>
 
-      <div v-if="apiResponse && apiResponse.success" class="space-y-6">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div v-if="apiResponse && (apiResponse.success || apiResponse.predictions)" class="space-y-6">
+        <div v-if="apiResponse.predictions" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-gradient-to-br from-purple-900 to-purple-700 rounded-xl p-6 text-white animate-slide-up" style="animation-delay: 0.2s;">
+            <div class="flex items-center mb-3">
+              <div class="bg-purple-500 p-2 rounded-lg mr-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold">Informations générales</h3>
+            </div>
+            <p class="text-purple-200 text-sm mb-2">{{ apiResponse.message }}</p>
+            <div class="mt-3 flex items-center">
+              <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 mr-2"></span>
+              <span class="text-purple-200 text-xs">Prédiction réussie</span>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-br from-blue-900 to-blue-700 rounded-xl p-6 text-white animate-slide-up" style="animation-delay: 0.3s;">
+            <div class="flex items-center mb-3">
+              <div class="bg-blue-500 p-2 rounded-lg mr-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold">Résumé des prédictions</h3>
+            </div>
+            <div class="space-y-2">
+              <div class="flex justify-between">
+                <span class="text-blue-200 text-sm">Nombre total:</span>
+                <span class="text-white font-medium">{{ apiResponse.total_predictions }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-blue-200 text-sm">Moyenne:</span>
+                <span class="text-white font-medium">{{ Math.round(apiResponse.predictions.reduce((sum, p) => sum + p.prediction, 0) / apiResponse.predictions.length).toLocaleString() }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-blue-200 text-sm">Lieu:</span>
+                <span class="text-white font-medium">{{ apiResponse.predictions[0]?.location || 'N/A' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-br from-emerald-900 to-emerald-700 rounded-xl p-6 text-white animate-slide-up" style="animation-delay: 0.4s;">
+            <div class="flex items-center mb-3">
+              <div class="bg-emerald-500 p-2 rounded-lg mr-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold">Données historiques</h3>
+            </div>
+            <div class="space-y-2">
+              <div>
+                <span class="text-emerald-200 text-sm block">Dernière date:</span>
+                <span class="text-white font-bold text-lg">{{ new Date(apiResponse.historical_data_info.last_historical_date).toLocaleDateString('fr-FR') }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-emerald-200 text-sm">Enregistrements:</span>
+                <span class="text-white font-medium">{{ apiResponse.historical_data_info.historical_records }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-emerald-200 text-sm">Moyenne historique:</span>
+                <span class="text-white font-medium">{{ Math.round(apiResponse.historical_data_info.avg_historical_cases).toLocaleString() }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div v-else-if="apiResponse.success" class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="bg-gradient-to-br from-purple-900 to-purple-700 rounded-xl p-6 text-white animate-slide-up" style="animation-delay: 0.2s;">
             <div class="flex items-center mb-3">
               <div class="bg-purple-500 p-2 rounded-lg mr-3">
@@ -255,13 +323,44 @@
               {{ t('upload.predictionChart') }}
             </h2>
             <div class="text-sm text-slate-400">
-              {{ apiResponse.message }}
+              {{ apiResponse.message || (apiResponse.sequence_predictions ? 'Prédictions séquentielles' : 'Prédictions') }}
             </div>
           </div>
           <PredictionChart :data="apiResponse" />
         </div>
 
-        <div class="bg-slate-800 rounded-xl p-6 shadow-lg animate-slide-up" style="animation-delay: 0.6s;">
+        <div v-if="apiResponse.predictions" class="bg-slate-800 rounded-xl p-6 shadow-lg animate-slide-up" style="animation-delay: 0.6s;">
+          <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+            </svg>
+            Prédictions détaillées
+          </h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-slate-700">
+                  <th class="text-left py-3 px-2 text-slate-300 font-medium">Date</th>
+                  <th class="text-left py-3 px-2 text-slate-300 font-medium">Lieu</th>
+                  <th class="text-right py-3 px-2 text-slate-300 font-medium">Cas prédits</th>
+                  <th class="text-right py-3 px-2 text-slate-300 font-medium">Valeur exacte</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(prediction, index) in apiResponse.predictions" :key="index" class="border-b border-slate-700/50 hover:bg-slate-700/30">
+                  <td class="py-3 px-2 text-white font-medium">
+                    {{ new Date(prediction.date).toLocaleDateString('fr-FR') }}
+                  </td>
+                  <td class="py-3 px-2 text-slate-300">{{ prediction.location }}</td>
+                  <td class="py-3 px-2 text-right text-white font-medium">{{ Math.round(prediction.prediction).toLocaleString() }}</td>
+                  <td class="py-3 px-2 text-right text-slate-300">{{ prediction.prediction.toFixed(2) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div v-else-if="apiResponse.sequence_predictions" class="bg-slate-800 rounded-xl p-6 shadow-lg animate-slide-up" style="animation-delay: 0.6s;">
           <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
@@ -308,7 +407,7 @@
         </div>
       </div>
 
-      <div v-else-if="apiResponse && !apiResponse.success" class="bg-slate-800 rounded-xl p-6 shadow-lg border border-red-500/20 animate-slide-up" style="animation-delay: 0.2s;">
+      <div v-else-if="apiResponse && !apiResponse.success && !apiResponse.predictions" class="bg-slate-800 rounded-xl p-6 shadow-lg border border-red-500/20 animate-slide-up" style="animation-delay: 0.2s;">
         <h2 class="text-xl font-semibold text-white mb-4 flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -328,6 +427,7 @@ import { ref, computed } from 'vue'
 import { useI18n } from '../composables/useI18n.js'
 import LanguageSelector from '../components/LanguageSelector.vue'
 import PredictionChart from '../components/PredictionChart.vue'
+import { API_URL } from '../constants.js'
 
 const emit = defineEmits(['logout'])
 
@@ -373,21 +473,30 @@ const processFile = async () => {
   if (!selectedFile.value) return
   
   isProcessing.value = true
+  apiResponse.value = null
   
   try {
-    // TODO: Implement CSV to JSON conversion and API call
-    console.log('Processing file:', selectedFile.value.name)
-    console.log('CSV Delimiter:', csvDelimiter.value)
-    console.log('Has Headers:', hasHeaders.value)
+    const formData = new FormData()
+    formData.append('file', selectedFile.value)
+        
+    const response = await fetch(`${API_URL}/api/covid-prediction/`, {
+      method: 'POST',
+      body: formData,
+      credentials: 'include',
+    })
     
-    // Simulate processing time
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
     
-    apiResponse.value = {"success":true,"sequence_predictions":[{"month_index":1,"month_info":{"month":1,"season":1,"season_name":"Erreur","quarter":1},"weather_input":{"precipitation_mm":80,"humidite_moyenne":75,"insolation_hours":3,"temperature_moyenne":5,"month":1,"season":1},"predicted_cases":1120.4362383866278,"cases_trend":0.0,"trend_percentage":0.0,"previous_month_cases":1106.1250138860482,"error":"Erreur de prédiction: X has 54 features, but StandardScaler is expecting 51 features as input."},{"month_index":2,"month_info":{"month":2,"season":1,"season_name":"Erreur","quarter":1},"weather_input":{"precipitation_mm":65,"humidite_moyenne":70,"insolation_hours":5,"temperature_moyenne":8,"month":2,"season":1},"predicted_cases":1209.1554230837246,"cases_trend":0.0,"trend_percentage":0.0,"previous_month_cases":1120.4362383866278,"error":"Erreur de prédiction: X has 54 features, but StandardScaler is expecting 51 features as input."},{"month_index":3,"month_info":{"month":3,"season":2,"season_name":"Erreur","quarter":1},"weather_input":{"precipitation_mm":45,"humidite_moyenne":65,"insolation_hours":7,"temperature_moyenne":14,"month":3,"season":2},"predicted_cases":1183.900766972473,"cases_trend":0.0,"trend_percentage":0.0,"previous_month_cases":1209.1554230837246,"error":"Erreur de prédiction: X has 54 features, but StandardScaler is expecting 51 features as input."},{"month_index":4,"month_info":{"month":4,"season":2,"season_name":"Erreur","quarter":1},"weather_input":{"precipitation_mm":35,"humidite_moyenne":60,"insolation_hours":9,"temperature_moyenne":19,"month":4,"season":2},"predicted_cases":1110.6260552131782,"cases_trend":0.0,"trend_percentage":0.0,"previous_month_cases":1183.900766972473,"error":"Erreur de prédiction: X has 54 features, but StandardScaler is expecting 51 features as input."},{"month_index":5,"month_info":{"month":5,"season":2,"season_name":"Erreur","quarter":1},"weather_input":{"precipitation_mm":25,"humidite_moyenne":55,"insolation_hours":11,"temperature_moyenne":24,"month":5,"season":2},"predicted_cases":1151.289889201912,"cases_trend":0.0,"trend_percentage":0.0,"previous_month_cases":1110.6260552131782,"error":"Erreur de prédiction: X has 54 features, but StandardScaler is expecting 51 features as input."}],"summary":{"total_months":5,"initial_cases":1295,"final_cases":1151.289889201912,"total_predicted_cases":5775.408372857915,"average_monthly_cases":1155.081674571583,"peak_cases":1209.1554230837246,"peak_month":2,"lowest_cases":1110.6260552131782,"lowest_month":4,"overall_trend":"stable","evolution":"De 1295 à 1151 cas sur 5 mois"},"model_info":{"model_name":"Gradient Boosting","model_type":"GradientBoostingRegressor (Multi-Cities Model)","status":"trained_loaded_multicities"},"message":"Prédiction séquentielle sur 5 mois consécutifs réussie"}
+    const data = await response.json()
+    
+    apiResponse.value = data
     
   } catch (error) {
     console.error('Error processing file:', error)
     apiResponse.value = {
+      success: false,
       status: 'error',
       message: error.message
     }
