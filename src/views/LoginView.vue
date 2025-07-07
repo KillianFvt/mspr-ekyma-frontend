@@ -96,9 +96,9 @@
                 Se souvenir de moi
               </label>
             </div>
-            <a href="#" class="text-sm text-emerald-400 hover:text-emerald-300 transition-colors">
+            <!-- <a href="#" class="text-sm text-emerald-400 hover:text-emerald-300 transition-colors">
               Trop coooool
-            </a>
+            </a> -->
           </div>
 
           <button
