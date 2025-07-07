@@ -87,5 +87,12 @@
   "auth": {
     "logout": "Abmelden",
     "logoutTooltip": "Sicheres Abmelden"
+  },
+  "aria": {
+    "logout": "Von der Anwendung abmelden",
+    "removeFile": "Ausgewählte Datei entfernen",
+    "browseFiles": "Dateien auf Ihrem Computer durchsuchen",
+    "processFile": "Ausgewählte Datei verarbeiten",
+    "dropZone": "Datei-Ablagebereich. Klicken Sie zum Auswählen einer Datei oder ziehen Sie eine Datei hierher"
   }
 } 

@@ -87,5 +87,12 @@
   "auth": {
     "logout": "Disconnetti",
     "logoutTooltip": "Disconnessione sicura"
+  },
+  "aria": {
+    "logout": "Disconnettersi dall'applicazione",
+    "removeFile": "Rimuovere il file selezionato",
+    "browseFiles": "Sfogliare i file sul computer",
+    "processFile": "Elaborare il file selezionato",
+    "dropZone": "Area di rilascio file. Fare clic per selezionare un file o trascinare e rilasciare un file qui"
   }
 } 
