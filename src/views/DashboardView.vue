@@ -21,7 +21,7 @@
           </div>
           <div>
             <h1 class="text-3xl font-bold text-white mb-1">{{ t('upload.title') }}</h1>
-            <p class="text-slate-400">{{ t('upload.subtitle') }}</p>
+            <p class="text-slate-200 mb-2">{{ t('upload.subtitle') }}</p>
             <div class="flex items-center mt-2">
               <div class="w-2 h-2 bg-emerald-400 rounded-full mr-2 animate-pulse"></div>
               <span class="text-emerald-400 text-sm font-medium">Connecté et prêt</span>
@@ -42,11 +42,11 @@
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
               </svg>
-              <span class="hidden sm:inline">Se déconnecter</span>
+              <span class="hidden sm:inline">{{ t('auth.logout') }}</span>
             </button>
-            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-slate-700 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
-              Déconnexion sécurisée
-            </div>
+                          <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-slate-700 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+                {{ t('auth.logoutTooltip') }}
+              </div>
           </div>
         </div>
       </div>
@@ -94,7 +94,7 @@
               <button class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-6 rounded-lg transition-colors">
                 {{ t('upload.browse') }}
               </button>
-              <p class="text-sm text-slate-500 mt-4">{{ t('upload.formats') }}</p>
+              <p class="text-slate-200 text-sm">{{ t('upload.formats') }}</p>
             </div>
             
             <div v-else class="flex items-center justify-center space-x-4">
@@ -131,7 +131,7 @@
               </h3>
               <div class="space-y-4">
                 <div>
-                  <label class="block text-sm font-medium text-slate-300 mb-2">{{ t('upload.delimiter') }}</label>
+                  <label class="block text-sm font-medium text-slate-200 mb-2">{{ t('upload.delimiter') }}</label>
                   <select v-model="csvDelimiter" class="w-full bg-slate-600 text-white rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option value=",">,</option>
                     <option value=";">;</option>
@@ -146,7 +146,7 @@
                     v-model="hasHeaders"
                     class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-600 rounded bg-slate-600"
                   >
-                  <label for="hasHeaders" class="ml-2 text-sm text-slate-300">{{ t('upload.hasHeaders') }}</label>
+                  <label for="hasHeaders" class="ml-2 text-sm text-slate-200">{{ t('upload.hasHeaders') }}</label>
                 </div>
               </div>
             </div>
@@ -322,7 +322,7 @@
               </svg>
               {{ t('upload.predictionChart') }}
             </h2>
-            <div class="text-sm text-slate-400">
+            <div class="text-sm text-slate-200">
               {{ apiResponse.message || (apiResponse.sequence_predictions ? 'Prédictions séquentielles' : 'Prédictions') }}
             </div>
           </div>
@@ -351,9 +351,9 @@
                   <td class="py-3 px-2 text-white font-medium">
                     {{ new Date(prediction.date).toLocaleDateString('fr-FR') }}
                   </td>
-                  <td class="py-3 px-2 text-slate-300">{{ prediction.location }}</td>
+                  <td class="py-3 px-2 text-slate-200">{{ prediction.location }}</td>
                   <td class="py-3 px-2 text-right text-white font-medium">{{ Math.round(prediction.prediction).toLocaleString() }}</td>
-                  <td class="py-3 px-2 text-right text-slate-300">{{ prediction.prediction.toFixed(2) }}</td>
+                  <td class="py-3 px-2 text-right text-slate-200">{{ prediction.prediction.toFixed(2) }}</td>
                 </tr>
               </tbody>
             </table>
@@ -384,7 +384,7 @@
                   <td class="py-3 px-2 text-white font-medium">
                     {{ ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'][prediction.month_info.month - 1] }}
                   </td>
-                  <td class="py-3 px-2 text-slate-300">{{ prediction.month_info.season_name }}</td>
+                  <td class="py-3 px-2 text-slate-200">{{ prediction.month_info.season_name }}</td>
                   <td class="py-3 px-2 text-right text-white font-medium">{{ Math.round(prediction.predicted_cases).toLocaleString() }}</td>
                   <td class="py-3 px-2 text-right">
                     <span :class="[
@@ -398,8 +398,8 @@
                       {{ prediction.trend_percentage > 0 ? '+' : '' }}{{ Math.round(prediction.trend_percentage * 100) / 100 }}%
                     </span>
                   </td>
-                  <td class="py-3 px-2 text-right text-slate-300">{{ prediction.weather_input.temperature_moyenne }}°C</td>
-                  <td class="py-3 px-2 text-right text-slate-300">{{ prediction.weather_input.precipitation_mm }}mm</td>
+                  <td class="py-3 px-2 text-right text-slate-200">{{ prediction.weather_input.temperature_moyenne }}°C</td>
+                  <td class="py-3 px-2 text-right text-slate-200">{{ prediction.weather_input.precipitation_mm }}mm</td>
                 </tr>
               </tbody>
             </table>

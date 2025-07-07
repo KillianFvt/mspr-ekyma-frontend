@@ -83,5 +83,9 @@
     "en": "English",
     "de": "Deutsch",
     "it": "Italiano"
+  },
+  "auth": {
+    "logout": "Se déconnecter",
+    "logoutTooltip": "Déconnexion sécurisée"
   }
 } 

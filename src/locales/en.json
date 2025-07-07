@@ -83,5 +83,9 @@
     "en": "English",
     "de": "Deutsch",
     "it": "Italiano"
+  },
+  "auth": {
+    "logout": "Logout",
+    "logoutTooltip": "Secure logout"
   }
 } 

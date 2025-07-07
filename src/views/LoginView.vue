@@ -18,7 +18,7 @@
             </svg>
           </div>
           <h1 class="text-3xl font-bold text-white mb-2">Connexion</h1>
-          <p class="text-slate-400">Accédez à votre tableau de bord</p>
+          <p class="text-slate-200">Accédez à votre tableau de bord</p>
         </div>
 
         <div v-if="errorMessage" class="mb-6 bg-red-900/20 border border-red-700/50 text-red-400 px-4 py-3 rounded-lg flex items-center space-x-2">
@@ -30,7 +30,7 @@
 
         <form @submit.prevent="handleLogin" class="space-y-6">
           <div>
-            <label for="username" class="block text-sm font-medium text-slate-300 mb-2">
+            <label for="username" class="block text-sm font-medium text-slate-200 mb-2">
               Nom d'utilisateur
             </label>
             <div class="relative">
@@ -51,7 +51,7 @@
           </div>
 
           <div>
-            <label for="password" class="block text-sm font-medium text-slate-300 mb-2">
+            <label for="password" class="block text-sm font-medium text-slate-200 mb-2">
               Mot de passe
             </label>
             <div class="relative">
@@ -92,7 +92,7 @@
                   type="checkbox"
                   class="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-slate-600 rounded bg-slate-700"
               />
-              <label for="remember" class="ml-2 text-sm text-slate-300">
+              <label for="remember" class="ml-2 text-sm text-slate-200">
                 Se souvenir de moi
               </label>
             </div>
@@ -127,7 +127,7 @@
       </div>
 
       <div class="mt-8 text-center">
-        <p class="text-slate-500 text-sm">
+        <p class="text-slate-300 text-sm">
           © 2025 MSPR Ekyma. Tous droits réservés.
         </p>
       </div>
