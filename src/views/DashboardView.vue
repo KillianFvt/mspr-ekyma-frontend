@@ -37,6 +37,7 @@
           <div class="relative group">
             <button 
               @click="$emit('logout')"
+              :aria-label="t('aria.logout')"
               class="bg-slate-800/80 backdrop-blur-sm hover:bg-red-600 text-slate-300 hover:text-white px-4 py-2 rounded-lg border border-slate-600 hover:border-red-500 transition-all duration-300 flex items-center space-x-2 group shadow-lg hover:shadow-xl"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -76,6 +77,9 @@
                   : 'border-slate-600 hover:border-slate-500 hover:bg-slate-700/30'
             ]"
             @click="$refs.fileInput.click()"
+            role="button"
+            :aria-label="t('aria.dropZone')"
+            tabindex="0"
           >
             <input 
               type="file" 
@@ -91,7 +95,10 @@
               </svg>
               <p class="text-lg font-medium text-white mb-2">{{ t('upload.dropZone') }}</p>
               <p class="text-slate-400 mb-4">{{ t('upload.or') }}</p>
-              <button class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-6 rounded-lg transition-colors">
+              <button 
+                class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-6 rounded-lg transition-colors"
+                :aria-label="t('aria.browseFiles')"
+              >
                 {{ t('upload.browse') }}
               </button>
               <p class="text-slate-200 text-sm">{{ t('upload.formats') }}</p>
@@ -109,6 +116,7 @@
               </div>
               <button 
                 @click.stop="removeFile"
+                :aria-label="t('aria.removeFile')"
                 class="text-slate-400 hover:text-white transition-colors"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -156,6 +164,7 @@
             <button 
               @click="processFile"
               :disabled="!selectedFile || isProcessing"
+              :aria-label="t('aria.processFile')"
               :class="[
                 'px-8 py-3 rounded-lg font-medium transition-all duration-300 flex items-center space-x-2',
                 !selectedFile || isProcessing

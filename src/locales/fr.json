@@ -87,5 +87,12 @@
   "auth": {
     "logout": "Se déconnecter",
     "logoutTooltip": "Déconnexion sécurisée"
+  },
+  "aria": {
+    "logout": "Se déconnecter de l'application",
+    "removeFile": "Supprimer le fichier sélectionné",
+    "browseFiles": "Parcourir les fichiers sur votre ordinateur",
+    "processFile": "Traiter le fichier sélectionné",
+    "dropZone": "Zone de dépôt de fichier. Cliquez pour sélectionner un fichier ou glissez-déposez un fichier ici"
   }
 } 

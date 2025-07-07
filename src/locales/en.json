@@ -87,5 +87,12 @@
   "auth": {
     "logout": "Logout",
     "logoutTooltip": "Secure logout"
+  },
+  "aria": {
+    "logout": "Log out of the application",
+    "removeFile": "Remove selected file",
+    "browseFiles": "Browse files on your computer",
+    "processFile": "Process selected file",
+    "dropZone": "File drop zone. Click to select a file or drag and drop a file here"
   }
 } 
