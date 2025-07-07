@@ -83,5 +83,9 @@
     "en": "English",
     "de": "Deutsch",
     "it": "Italiano"
+  },
+  "auth": {
+    "logout": "Disconnetti",
+    "logoutTooltip": "Disconnessione sicura"
   }
 } 
